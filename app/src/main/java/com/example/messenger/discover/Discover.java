@@ -1,4 +1,4 @@
-package com.example.homework2.discover;
+package com.example.messenger.discover;
 
 import java.util.ArrayList;
 

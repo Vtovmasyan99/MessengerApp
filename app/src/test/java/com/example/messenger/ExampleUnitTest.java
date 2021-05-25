@@ -1,4 +1,4 @@
-package com.example.homework2;
+package com.example.messenger;
 
 import org.junit.Test;
 

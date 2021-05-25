@@ -1,4 +1,4 @@
-package com.example.homework2;
+package com.example.messenger;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -7,20 +7,20 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.SearchView;
 
-import com.example.homework2.chat.Chat;
-import com.example.homework2.chat.ChatAdapter;
+import com.example.messenger.chat.Chat;
+import com.example.messenger.chat.ChatAdapter;
 
 import java.util.LinkedList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ChatsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class ChatsFragment extends Fragment {
     private ChatAdapter chatAdapter;
     private LinkedList<Chat> data;
@@ -30,13 +30,7 @@ public class ChatsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment MessageFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static ChatsFragment newInstance() {
         ChatsFragment fragment = new ChatsFragment();
         return fragment;
@@ -69,6 +63,12 @@ public class ChatsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // TODO Add your menu entries here
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -77,4 +77,27 @@ public class ChatsFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_chats, container, false);
     }
+
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.search_menu, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView)searchItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                chatAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
+        return true;
+
+    };
 }

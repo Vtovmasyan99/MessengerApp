@@ -1,4 +1,4 @@
-package com.example.homework2.contact;
+package com.example.messenger.contact;
 
 
 public class Contact {

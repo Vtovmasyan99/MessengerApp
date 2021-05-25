@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.homework2">
+    package="com.example.messenger">
 
     <application
         android:allowBackup="true"
@@ -9,18 +9,15 @@
         android:roundIcon="@drawable/messenger_icon2"
         android:supportsRtl="true"
         android:theme="@style/Theme.Homework2">
-        <activity android:name=".RegisterActivity"></activity>
-        <activity android:name=".LoginActivity">
+        <activity android:name="com.example.messenger.RegisterActivity"></activity>
+        <activity android:name="com.example.messenger.LoginActivity">
+
+        </activity>
+        <activity android:name="com.example.messenger.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />            </intent-filter>
         </activity>
     </application>
 

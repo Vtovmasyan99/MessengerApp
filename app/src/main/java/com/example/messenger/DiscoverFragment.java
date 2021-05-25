@@ -1,7 +1,5 @@
-package com.example.homework2;
+package com.example.messenger;
 
-import android.animation.IntArrayEvaluator;
-import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,13 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.homework2.contact.Contact;
-import com.example.homework2.contact.ContactAdapter;
-import com.example.homework2.discover.Discover;
-import com.example.homework2.discover.DiscoverAdapter;
+import com.example.messenger.discover.Discover;
+import com.example.messenger.discover.DiscoverAdapter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 
 /**

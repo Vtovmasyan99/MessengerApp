@@ -1,19 +1,28 @@
-package com.example.homework2;
+package com.example.messenger;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
+
+import com.example.messenger.contact.MainViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
 
 public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.bottomNavigationView)
     public BottomNavigationView bottomNavigationView;
+
+    private MainViewModel mMainViewModel;
 
 
     @Override
@@ -22,15 +31,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        // 修改下面的代码，添加向 settingsFragment的跳转逻辑
-        // TODO
+        mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+
         Fragment profileFragment = new ProfileFragment();
         Fragment chatsFragment = new ChatsFragment();
         Fragment contactsFragment = new ContactsFragment();
         Fragment discoverFragment = new DiscoverFragment();
-        Fragment settingsFragment = new SettingsFragment();
 
-        setCurrentFragment(chatsFragment); // 初始的Fragment为chatsFragment
+        setCurrentFragment(chatsFragment);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
                     switch (item.getItemId()) {
@@ -49,10 +57,34 @@ public class MainActivity extends AppCompatActivity {
                     }
                     return false;
                 }
+
         );
+
+        EditText searchView = findViewById(R.id.et_search_main);
+        searchView.clearFocus();
+
+        searchView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String searchInput = s.toString().toLowerCase();
+                mMainViewModel.setSearchInputMutableLiveData(searchInput);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+//                String searchInput = "";
+//                mMainViewModel.setSearchInputMutableLiveData(searchInput);
+            }
+        });
     }
 
     private void setCurrentFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, fragment).commit();
     }
+
 }

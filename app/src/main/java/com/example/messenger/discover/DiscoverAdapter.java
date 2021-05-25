@@ -1,4 +1,4 @@
-package com.example.homework2.discover;
+package com.example.messenger.discover;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.homework2.R;
+import com.example.messenger.R;
 
 import java.util.LinkedList;
 

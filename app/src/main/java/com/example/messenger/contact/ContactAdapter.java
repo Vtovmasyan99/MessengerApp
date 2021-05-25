@@ -1,4 +1,4 @@
-package com.example.homework2.contact;
+package com.example.messenger.contact;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,12 +10,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.homework2.R;
+import com.example.messenger.R;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactViewHolder> {
-    private LinkedList<Contact> data;
+    private List<Contact> mData;
     private Context context;
 
     // 完成类ContactViewHolder
@@ -35,10 +36,9 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
 
     }
 
-    public ContactAdapter(LinkedList<Contact> data, Context context) {
-
+    public ContactAdapter(List<Contact> data, Context context) {
         this.context = context;
-        this.data = data;
+        this.mData = data;
     }
 
     @NonNull
@@ -53,14 +53,20 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
     @Override
     public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
         // TODO
-        Contact contact = data.get(position);
+        Contact contact = mData.get(position);
         holder.avatar.setImageResource(contact.getAvatarIcon());
         holder.nickname.setText(contact.getNickname());
+    }
+
+    public void setData(List<Contact> data) {
+        mData.clear();
+        mData = data;
+        notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
         // TODO
-        return data.size();
+        return mData.size();
     }
 }

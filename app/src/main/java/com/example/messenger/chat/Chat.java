@@ -1,4 +1,4 @@
-package com.example.homework2.chat;
+package com.example.messenger.chat;
 
 public class Chat {
 

@@ -1,4 +1,4 @@
-package com.example.homework2;
+package com.example.messenger;
 
 import androidx.appcompat.app.AppCompatActivity;
 
