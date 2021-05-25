@@ -2,10 +2,10 @@ package com.example.messenger.chat;
 
 public class Chat {
 
-    private final String nickname; // 昵称
-    private final String lastSpeak; //最后聊天内容
-    private final int avatarIcon; // 头像
-    private final String lastSpeakTime; //最后联络时间
+    private final String nickname;
+    private final String lastSpeak;
+    private final int avatarIcon;
+    private final String lastSpeakTime;
 
     public Chat(String nickname, int avatarIcon, String lastSpeak, String lastSpeakTime) {
         this.nickname = nickname;

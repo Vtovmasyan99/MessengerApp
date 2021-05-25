@@ -31,7 +31,6 @@ public class ContactsFragment extends Fragment {
 
 
     public ContactsFragment() {
-        // Required empty public constructor
     }
 
 
@@ -69,7 +68,6 @@ public class ContactsFragment extends Fragment {
         mContacts.add(new Contact(getString(R.string.nickname5), R.drawable.avatar_male));
         mContacts.add(new Contact(getString(R.string.nickname6), R.drawable.avatar_female));
         mContacts.add(new Contact(getString(R.string.nickname11), R.drawable.avatar_male));
-        List<Contact> mContactsCopy = new ArrayList<>(mContacts);
 
         ContactAdapter contactAdapter = new ContactAdapter(mContacts, getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -82,7 +80,7 @@ public class ContactsFragment extends Fragment {
                 List<Contact> searchedContactsList = new ArrayList<>();
 
                 if (searchInput == null || searchInput.isEmpty()) {
-                    contactAdapter.setData(mContactsCopy);
+                    contactAdapter.setData(mContacts);
                 }
                 else {
                     for (Contact contact : mContacts) {

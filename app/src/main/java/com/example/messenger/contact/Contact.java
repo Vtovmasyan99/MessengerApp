@@ -2,8 +2,8 @@ package com.example.messenger.contact;
 
 
 public class Contact {
-    private String nickname; // 昵称
-    private int avatarIcon; // 头像
+    private String nickname;
+    private int avatarIcon;
 
     public Contact(String nickname, int avatarIcon) {
         this.nickname = nickname;
