@@ -92,6 +92,7 @@ public class ContactsFragment extends Fragment {
                     }
                     contactAdapter.setData(searchedContactsList);
 
+
                 }
             }
 

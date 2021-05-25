@@ -19,10 +19,6 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
     private List<Contact> mData;
     private Context context;
 
-    // 完成类ContactViewHolder
-    // 使用itemView.findViewById()方法来寻找对应的控件
-    // TODO
-
     public static class ContactViewHolder extends RecyclerView.ViewHolder {
         TextView nickname;
         ImageView avatar;
@@ -44,7 +40,6 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
     @NonNull
     @Override
     public ContactAdapter.ContactViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // TODO
         View view = LayoutInflater.from(context).inflate(R.layout.item_recycle_contact, parent, false);
 
         return new ContactViewHolder(view);
@@ -52,21 +47,18 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
 
     @Override
     public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
-        // TODO
         Contact contact = mData.get(position);
         holder.avatar.setImageResource(contact.getAvatarIcon());
         holder.nickname.setText(contact.getNickname());
     }
 
     public void setData(List<Contact> data) {
-        mData.clear();
         mData = data;
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        // TODO
         return mData.size();
     }
 }
