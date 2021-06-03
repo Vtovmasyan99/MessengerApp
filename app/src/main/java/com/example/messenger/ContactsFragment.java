@@ -56,6 +56,7 @@ public class ContactsFragment extends Fragment {
 //        marginLayoutParams.setMargins(0, 10, 0, 10);
 //        recyclerView.setLayoutParams(marginLayoutParams);
 
+        List<Contact> mContacts = new ArrayList<>();
 
         mContacts.add(new Contact(getString(R.string.nickname1), R.drawable.avatar_male));
         mContacts.add(new Contact(getString(R.string.nickname10), R.drawable.avatar_female));
@@ -77,20 +78,21 @@ public class ContactsFragment extends Fragment {
         mMainViewModel.getSearchInputMutableLiveData().observe(requireActivity(), new Observer<String>() {
             @Override
             public void onChanged(String searchInput) {
-                List<Contact> searchedContactsList = new ArrayList<>();
+                if (searchInput != null) {
+                    List<Contact> searchedContactsList = new ArrayList<>();
 
-                if (searchInput == null || searchInput.isEmpty()) {
-                    contactAdapter.setData(mContacts);
-                }
-                else {
-                    for (Contact contact : mContacts) {
-                        if (contact.getNickname().toLowerCase().startsWith(searchInput)) {
-                            searchedContactsList.add(contact);
+                    if (searchInput.isEmpty()) {
+                        contactAdapter.setData(mContacts);
+                    } else {
+                        for (Contact contact : mContacts) {
+                            if (contact.getNickname().toLowerCase().startsWith(searchInput)) {
+                                searchedContactsList.add(contact);
+                            }
                         }
+                        contactAdapter.setData(searchedContactsList);
+
+
                     }
-                    contactAdapter.setData(searchedContactsList);
-
-
                 }
             }
 
@@ -103,5 +105,17 @@ public class ContactsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_contacts, container, false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        mMainViewModel.setSearchInputMutableLiveData(null);
     }
 }

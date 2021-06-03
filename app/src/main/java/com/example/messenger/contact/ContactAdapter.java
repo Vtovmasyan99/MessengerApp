@@ -1,16 +1,21 @@
 package com.example.messenger.contact;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.messenger.R;
+import com.example.messenger.chat.ChatRoomFragment;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -27,6 +32,15 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
             super(itemView);
             avatar = itemView.findViewById(R.id.avatar_icon_contact);
             nickname = itemView.findViewById(R.id.text_view_contact);
+            nickname.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CharSequence text = "Clicked on contact " + nickname.getText().toString();
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(avatar.getContext(), text, duration);
+                    toast.show();
+                }
+            });
 
         }
 
@@ -48,8 +62,19 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
     @Override
     public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
         Contact contact = mData.get(position);
+
         holder.avatar.setImageResource(contact.getAvatarIcon());
         holder.nickname.setText(contact.getNickname());
+        holder.nickname.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setCurrentFragment(new ChatRoomFragment());
+            }
+        });
+    }
+
+    private void setCurrentFragment(Fragment fragment) {
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.flFragment, fragment).addToBackStack("chatRoom").commit();
     }
 
     public void setData(List<Contact> data) {
@@ -60,5 +85,9 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
     @Override
     public int getItemCount() {
         return mData.size();
+    }
+
+    private AppCompatActivity getActivity() {
+        return (AppCompatActivity)  context;
     }
 }

@@ -25,7 +25,7 @@ import java.util.List;
 public class ChatsFragment extends Fragment {
     private RecyclerView recyclerView;
     private MainViewModel mMainViewModel;
-    List<Chat> mChats = new ArrayList<>();
+    List<Chat> mChats ;
 
 
     public ChatsFragment() {
@@ -46,7 +46,7 @@ public class ChatsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         recyclerView = getView().findViewById(R.id.chats_recylerview);
         mMainViewModel = ViewModelProviders.of(requireActivity()).get(MainViewModel.class);
-
+        mChats = new ArrayList<>();
 
         mChats.add(new Chat(getString(R.string.nickname1), R.drawable.avatar_male, getString(R.string.sentence1), "2021/01/01"));
         mChats.add(new Chat(getString(R.string.nickname2), R.drawable.avatar_male, getString(R.string.sentence2), "2021/01/01"));
@@ -66,21 +66,24 @@ public class ChatsFragment extends Fragment {
         mMainViewModel.getSearchInputMutableLiveData().observe(requireActivity(), new Observer<String>() {
             @Override
             public void onChanged(String searchInput) {
-                List<Chat> searchedChatsList = new ArrayList<>();
+                if (searchInput != null) {
+                    List<Chat> searchedChatsList = new ArrayList<>();
 
-                if (searchInput == null || searchInput.isEmpty()) {
-                    chatsAdapter.setData(mChats);
-                } else {
-                    for (Chat chat : mChats) {
-                        if (chat.getNickname().toLowerCase().startsWith(searchInput)) {
-                            searchedChatsList.add(chat);
+                    if (searchInput.isEmpty()) {
+                        chatsAdapter.setData(mChats);
+                    } else {
+                        for (Chat chat : mChats) {
+                            if (chat.getNickname().toLowerCase().startsWith(searchInput)) {
+                                searchedChatsList.add(chat);
+                            }
                         }
+                        chatsAdapter.setData(searchedChatsList);
+
+
                     }
-                    chatsAdapter.setData(searchedChatsList);
-
-
                 }
             }
+
 
         });
     }
@@ -94,4 +97,10 @@ public class ChatsFragment extends Fragment {
     }
 
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        mMainViewModel.setSearchInputMutableLiveData(null);
+    }
 }

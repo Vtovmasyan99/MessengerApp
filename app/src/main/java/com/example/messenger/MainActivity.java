@@ -11,16 +11,15 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.bottomNavigationView)
-    public BottomNavigationView bottomNavigationView;
+    private BottomNavigationView bottomNavigationView;
+    private EditText searchView;
 
     private MainViewModel mMainViewModel;
 
@@ -29,9 +28,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
 
         mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+
+        initViews();
 
         Fragment profileFragment = new ProfileFragment();
         Fragment chatsFragment = new ChatsFragment();
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         );
 
-        EditText searchView = findViewById(R.id.et_search_main);
+
         searchView.clearFocus();
 
         searchView.addTextChangedListener(new TextWatcher() {
@@ -77,14 +77,28 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-//                String searchInput = "";
-//                mMainViewModel.setSearchInputMutableLiveData(searchInput);
+
             }
         });
     }
 
+    private void initViews() {
+        searchView = findViewById(R.id.et_search_main);
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+    }
+
     private void setCurrentFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, fragment).commit();
+    }
+
+    public void hideBotNavAndSearchBar() {
+        bottomNavigationView.setVisibility(View.GONE);
+        searchView.setVisibility(View.GONE);
+    }
+
+    public void showBotNavAndSearchBar() {
+        bottomNavigationView.setVisibility(View.VISIBLE);
+        searchView.setVisibility(View.VISIBLE);
     }
 
 }
