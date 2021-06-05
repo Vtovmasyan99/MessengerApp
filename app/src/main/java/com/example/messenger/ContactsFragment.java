@@ -47,14 +47,11 @@ public class ContactsFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        recyclerView = view.findViewById(R.id.contacts_recylerview);
+        recyclerView = view.findViewById(R.id.contacts_recyclerview);
 
         mMainViewModel = ViewModelProviders.of(requireActivity()).get(MainViewModel.class);
 
 
-//        ViewGroup.MarginLayoutParams marginLayoutParams = new ViewGroup.MarginLayoutParams(recyclerView.getLayoutParams());
-//        marginLayoutParams.setMargins(0, 10, 0, 10);
-//        recyclerView.setLayoutParams(marginLayoutParams);
 
         List<Contact> mContacts = new ArrayList<>();
 

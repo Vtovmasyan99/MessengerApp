@@ -32,16 +32,6 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
             super(itemView);
             avatar = itemView.findViewById(R.id.avatar_icon_contact);
             nickname = itemView.findViewById(R.id.text_view_contact);
-            nickname.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    CharSequence text = "Clicked on contact " + nickname.getText().toString();
-                    int duration = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(avatar.getContext(), text, duration);
-                    toast.show();
-                }
-            });
-
         }
 
     }
@@ -71,6 +61,12 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
                 setCurrentFragment(new ChatRoomFragment());
             }
         });
+        holder.avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setCurrentFragment(new ChatRoomFragment());
+            }
+        });
     }
 
     private void setCurrentFragment(Fragment fragment) {
@@ -88,6 +84,6 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
     }
 
     private AppCompatActivity getActivity() {
-        return (AppCompatActivity)  context;
+        return (AppCompatActivity) context;
     }
 }
