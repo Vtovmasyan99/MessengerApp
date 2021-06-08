@@ -1,11 +1,16 @@
-package com.example.messenger;
+package com.example.messenger.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 
-import com.example.messenger.contact.MainViewModel;
+import com.example.messenger.R;
+import com.example.messenger.viewmodels.MainViewModel;
+import com.example.messenger.fragments.DiscoverFragment;
+import com.example.messenger.fragments.ChatsFragment;
+import com.example.messenger.fragments.ContactsFragment;
+import com.example.messenger.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import android.os.Bundle;

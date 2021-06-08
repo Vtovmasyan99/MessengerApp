@@ -1,4 +1,4 @@
-package com.example.messenger.discover;
+package com.example.messenger.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.messenger.R;
+import com.example.messenger.discover.Discover;
 
 import java.util.LinkedList;
 
@@ -28,7 +29,6 @@ public class DiscoverAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemViewType(int position) {
-        // TODO
         Discover discover = data.get(position);
         if (discover.getImageCount() < 4) {
             return LESS_FOUR_TYPE;
@@ -40,7 +40,6 @@ public class DiscoverAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // TODO
         View view = LayoutInflater.from(context).inflate(R.layout.item_list_discover_3, parent, false);
         View view2 = LayoutInflater.from(context).inflate(R.layout.item_list_discover_4, parent, false);
 
@@ -52,7 +51,6 @@ public class DiscoverAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        // TODO
         Discover discover = data.get(position);
 
         switch (holder.getItemViewType()) {
@@ -105,11 +103,9 @@ public class DiscoverAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        // TODO
         return data.size();
     }
 
-    // TODO: 完成DiscoverViewHolder类
     public static class DiscoverViewHolder extends RecyclerView.ViewHolder {
         public int imageCount;
         TextView title3;
@@ -119,7 +115,6 @@ public class DiscoverAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         ImageView image3_3;
         ImageView avatar_3;
 
-        // TODO: 添加其他包含的其他控件
         public DiscoverViewHolder(@NonNull View itemView, int imageCount) {
             super(itemView);
             this.imageCount = imageCount;
@@ -132,7 +127,6 @@ public class DiscoverAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    // TODO: 完成DiscoverViewHolder类
     public static class DiscoverViewHolder2 extends RecyclerView.ViewHolder {
         public int imageCount;
         TextView title4;
@@ -143,7 +137,6 @@ public class DiscoverAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         ImageView image4_4;
         ImageView avatar_4;
 
-        // TODO: 添加其他包含的其他控件
         public DiscoverViewHolder2(@NonNull View itemView, int imageCount) {
             super(itemView);
             this.imageCount = imageCount;

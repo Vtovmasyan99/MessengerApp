@@ -1,4 +1,4 @@
-package com.example.messenger;
+package com.example.messenger.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.messenger.R;
 
 public class LoginActivity extends AppCompatActivity {
     private String userId;

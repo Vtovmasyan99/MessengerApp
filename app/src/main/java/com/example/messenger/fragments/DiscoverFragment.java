@@ -1,4 +1,4 @@
-package com.example.messenger;
+package com.example.messenger.fragments;
 
 import android.os.Bundle;
 
@@ -12,8 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.messenger.R;
 import com.example.messenger.discover.Discover;
-import com.example.messenger.discover.DiscoverAdapter;
+import com.example.messenger.adapters.DiscoverAdapter;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

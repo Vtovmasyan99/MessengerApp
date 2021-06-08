@@ -1,4 +1,4 @@
-package com.example.messenger.chat;
+package com.example.messenger.fragments;
 
 import android.os.Bundle;
 
@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.messenger.MainActivity;
+import com.example.messenger.activities.MainActivity;
 import com.example.messenger.R;
 
 

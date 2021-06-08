@@ -1,4 +1,4 @@
-package com.example.messenger.contact;
+package com.example.messenger.viewmodels;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;

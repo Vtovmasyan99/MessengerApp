@@ -1,4 +1,4 @@
-package com.example.messenger;
+package com.example.messenger.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,9 +13,10 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.messenger.R;
 import com.example.messenger.contact.Contact;
-import com.example.messenger.contact.ContactAdapter;
-import com.example.messenger.contact.MainViewModel;
+import com.example.messenger.adapters.ContactAdapter;
+import com.example.messenger.viewmodels.MainViewModel;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -8,7 +8,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:padding="40dp"
-    tools:context=".RegisterActivity">
+    tools:context=".activities.RegisterActivity">
 
     <EditText
         android:id="@+id/et_email_register"

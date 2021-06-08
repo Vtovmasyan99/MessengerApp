@@ -1,4 +1,4 @@
-package com.example.messenger;
+package com.example.messenger.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.messenger.R;
 
 public class RegisterActivity extends AppCompatActivity {
     EditText mUserName, mPasswordOne, mPasswordTwo;
