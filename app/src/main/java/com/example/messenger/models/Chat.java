@@ -1,4 +1,4 @@
-package com.example.messenger.chat;
+package com.example.messenger.models;
 
 public class Chat {
 

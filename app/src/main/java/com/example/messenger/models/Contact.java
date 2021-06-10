@@ -1,4 +1,4 @@
-package com.example.messenger.contact;
+package com.example.messenger.models;
 
 
 public class Contact {

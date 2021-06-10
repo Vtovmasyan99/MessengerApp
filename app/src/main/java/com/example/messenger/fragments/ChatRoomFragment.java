@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,7 +22,7 @@ public class ChatRoomFragment extends Fragment {
     ImageView mOtherUserAvatar;
     TextView mChatName;
     RecyclerView mRecyclerView;
-
+    Button mBackButton;
 
 
     public ChatRoomFragment() {
@@ -50,12 +51,18 @@ public class ChatRoomFragment extends Fragment {
         mOtherUserAvatar = view.findViewById(R.id.iv_avatar_chatroom);
         mChatName = view.findViewById(R.id.tv_nickname_chatroom);
         mRecyclerView = view.findViewById(R.id.messages_recyclerview);
+        mBackButton = view.findViewById(R.id.btn_back_chat_room);
 
 
         String chatterName = "John Cole";
         mChatName.setText(chatterName);
         mOtherUserAvatar.setImageResource(R.drawable.friend);
-
+        mBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setCurrentFragment(new ContactsFragment());
+            }
+        });
 
 
 
@@ -66,5 +73,9 @@ public class ChatRoomFragment extends Fragment {
         super.onDestroyView();
         ((MainActivity)getActivity()).showBotNavAndSearchBar();
 
+    }
+
+    private void setCurrentFragment(Fragment fragment) {
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, fragment).commit();
     }
 }

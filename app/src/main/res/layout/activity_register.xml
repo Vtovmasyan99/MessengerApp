@@ -16,13 +16,6 @@
         android:layout_height="wrap_content"
         android:hint="Email" />
 
-    <Button
-        android:id="@+id/btn_send_otp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="sendOtp"
-        android:text="Send one time password" />
-
     <EditText
         android:id="@+id/et_real_name_register"
         android:layout_width="match_parent"
@@ -61,12 +54,6 @@
         android:layout_height="wrap_content"
         android:hint="Repeat password"
         android:inputType="textPassword" />
-
-    <EditText
-        android:id="@+id/et_otp_register"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="One time password" />
 
     <Button
         android:id="@+id/btn_register"

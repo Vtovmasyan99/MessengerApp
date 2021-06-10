@@ -15,11 +15,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.messenger.R;
-import com.example.messenger.viewmodels.UserViewModel;
+import com.example.messenger.models.UserModel;
 
 
 public class ProfileFragment extends Fragment {
-    private UserViewModel mUserViewModel;
+    private UserModel mUser;
     TextView mRealName;
     TextView mBirthDay;
     TextView mGender;
@@ -60,13 +60,9 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull  View view, @Nullable  Bundle savedInstanceState) {
-        mUserViewModel = ViewModelProviders.of(requireActivity()).get(UserViewModel.class);
+        mUser = new UserModel("username1", "password1", "John Stones", 1,
+                R.drawable.avatar, "male", "user@gmail.com");
 
-        mUserViewModel.setAvatar(R.drawable.avatar);
-        mUserViewModel.setRealNameMutableLiveData("John Stones");
-        mUserViewModel.setBirthdayMutableLiveData("20/12/1999");
-        mUserViewModel.setGender("Male");
-        mUserViewModel.setEmail("johnstones@gmail.com");
 
         mRealName = (TextView)view.findViewById(R.id.tv_real_name_profile);
         mBirthDay = (TextView)view.findViewById(R.id.tv_birthday_profile);
@@ -75,11 +71,11 @@ public class ProfileFragment extends Fragment {
         mAvatar = (ImageView)view.findViewById(R.id.iv_avatar_profile);
         mEditProfile = (Button)view.findViewById(R.id.btn_edit_profile);
 
-        mRealName.setText(mUserViewModel.getRealNameMutableLiveData().getValue());
-        mBirthDay.setText(mUserViewModel.getBirthdayMutableLiveData().getValue());
-        mGender.setText(mUserViewModel.getGender());
-        mEmail.setText(mUserViewModel.getEmail());
-        mAvatar.setImageResource(mUserViewModel.getAvatar());
+        mRealName.setText(mUser.getRealName());
+        mBirthDay.setText(mUser.getBirthday());
+        mGender.setText(mUser.getGender());
+        mEmail.setText(mUser.getEmail());
+        mAvatar.setImageResource(mUser.getAvatar());
 
         super.onViewCreated(view, savedInstanceState);
 
@@ -90,6 +86,8 @@ public class ProfileFragment extends Fragment {
             }
         });
     }
+
+
     private void setCurrentFragment(Fragment fragment) {
         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.flFragment, fragment).addToBackStack("editProfile").commit();
     }

@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.messenger.R;
-import com.example.messenger.chat.Chat;
+import com.example.messenger.models.Chat;
 
 
 import java.util.List;

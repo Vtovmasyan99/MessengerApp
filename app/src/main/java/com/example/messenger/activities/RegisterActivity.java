@@ -44,8 +44,6 @@ public class RegisterActivity extends AppCompatActivity {
             toast.show();
         }
     }
-    public void sendOtp(View v) {
 
-    }
 
 }

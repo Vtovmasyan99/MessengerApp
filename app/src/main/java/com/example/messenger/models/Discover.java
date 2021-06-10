@@ -1,13 +1,13 @@
-package com.example.messenger.discover;
+package com.example.messenger.models;
 
 import java.util.ArrayList;
 
 public class Discover {
-    private int avatarIcon; //头像
-    private String nickname; //昵称
-    private String text; // 文字
-    private String publishedTime; // 发布时间
-    private ArrayList<Integer> images; // 图片
+    private int avatarIcon;
+    private String nickname;
+    private String text;
+    private String publishedTime;
+    private ArrayList<Integer> images;
 
     public Discover(String nickname, int avatarIcon, String text, String publishedTime, ArrayList<Integer> images) {
         this.nickname = nickname;

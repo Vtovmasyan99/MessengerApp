@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.messenger.R;
-import com.example.messenger.contact.Contact;
+import com.example.messenger.models.Contact;
 import com.example.messenger.fragments.ChatRoomFragment;
 
 import java.util.List;

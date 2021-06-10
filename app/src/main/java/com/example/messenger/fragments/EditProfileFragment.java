@@ -2,47 +2,42 @@ package com.example.messenger.fragments;
 
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.messenger.R;
 import com.example.messenger.activities.MainActivity;
 
 public class EditProfileFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    Button mBackButton;
 
     public EditProfileFragment() {
-        // Required empty public constructor
     }
 
 
     public static EditProfileFragment newInstance(String param1, String param2) {
         EditProfileFragment fragment = new EditProfileFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                setCurrentFragment(new ProfileFragment());
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override
@@ -53,10 +48,25 @@ public class EditProfileFragment extends Fragment {
     }
 
     @Override
+    public void onViewCreated(@NonNull  View view, @Nullable  Bundle savedInstanceState) {
+        mBackButton = (Button)view.findViewById(R.id.btn_back_edit_profile);
+        mBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setCurrentFragment(new ProfileFragment());
+            }
+        });
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         ((MainActivity)getActivity()).showBotNavAndSearchBar();
 
+    }
+    private void setCurrentFragment(Fragment fragment) {
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, fragment).commit();
     }
 
 }

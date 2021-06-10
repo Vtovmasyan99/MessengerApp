@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.messenger.R;
-import com.example.messenger.discover.Discover;
+import com.example.messenger.models.Discover;
 
 import java.util.LinkedList;
 

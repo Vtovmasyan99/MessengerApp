@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.messenger.R;
-import com.example.messenger.chat.Chat;
+import com.example.messenger.models.Chat;
 import com.example.messenger.adapters.ChatsAdapter;
 import com.example.messenger.viewmodels.MainViewModel;
 
