@@ -11,13 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.messenger.R;
 import com.example.messenger.activities.MainActivity;
 
 public class EditProfileFragment extends Fragment {
 
-    Button mBackButton;
+    ImageView mBackButton;
 
     public EditProfileFragment() {
     }
@@ -49,7 +50,8 @@ public class EditProfileFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull  View view, @Nullable  Bundle savedInstanceState) {
-        mBackButton = (Button)view.findViewById(R.id.btn_back_edit_profile);
+        mBackButton = (ImageView) view.findViewById(R.id.iv_back_edit_profile);
+        mBackButton.setImageResource(R.drawable.ic_baseline_back);
         mBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

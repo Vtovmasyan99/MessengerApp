@@ -25,8 +25,9 @@ public class ChatRoomFragment extends Fragment {
     private ImageView mOtherUserAvatar;
     private TextView mChatName;
     private RecyclerView mRecyclerView;
-    private Button mBackButton;
+    private ImageView mBackButton;
 
+    ImageView mUseCamera, mUseGallery, mUseRecorder, mSendMessage, mSendLocation;
     private MainViewModel mMainViewModel;
 
     private Contact mCurrentContact;
@@ -57,18 +58,37 @@ public class ChatRoomFragment extends Fragment {
         mOtherUserAvatar = view.findViewById(R.id.iv_avatar_chatroom);
         mChatName = view.findViewById(R.id.tv_nickname_chatroom);
         mRecyclerView = view.findViewById(R.id.messages_recyclerview);
-        mBackButton = view.findViewById(R.id.btn_back_chat_room);
+        mBackButton = view.findViewById(R.id.iv_back_chat_room);
+        mBackButton.setImageResource(R.drawable.ic_baseline_back);
+
+        mUseCamera = (ImageView) view.findViewById(R.id.iv_use_camera_message_room);
+        mUseCamera.setImageResource(R.drawable.ic_baseline_camera);
+        mUseGallery = (ImageView)view.findViewById(R.id.iv_use_gallery_message_room);
+        mUseGallery.setImageResource(R.drawable.ic_baseline_gallery);
+        mUseRecorder = (ImageView)view.findViewById(R.id.iv_use_recorder_message_room);
+        mUseRecorder.setImageResource(R.drawable.ic_baseline_voice);
+        mSendMessage = (ImageView) view.findViewById(R.id.iv_send_message_room);
+        mSendMessage.setImageResource(R.drawable.ic_baseline_send);
+        mSendLocation = (ImageView)view.findViewById(R.id.iv_send_location_message_room);
+        mSendLocation.setImageResource(R.drawable.ic_baseline_add_location);
+
         mMainViewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
 
         mCurrentContact = mMainViewModel.getCurrentContactMutableLiveData().getValue();
-
+        int fragmentBeforeClick = mMainViewModel.getFragmentBeforeClick();
 
         mChatName.setText(mCurrentContact.getNickname());
         mOtherUserAvatar.setImageResource(mCurrentContact.getAvatarIcon());
         mBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setCurrentFragment(new ContactsFragment());
+                if (fragmentBeforeClick == 1) {
+                    setCurrentFragment(new ChatsFragment());
+                }
+                else {
+                    setCurrentFragment(new ContactsFragment());
+
+                }
             }
         });
 

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.messenger.R;
 import com.example.messenger.models.Discover;
@@ -26,17 +27,12 @@ import java.util.LinkedList;
  */
 public class DiscoverFragment extends Fragment {
     private RecyclerView recyclerView;
+    ImageView mAddPost;
 
     public DiscoverFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment ExploreFragment.
-     */
     public static DiscoverFragment newInstance() {
         DiscoverFragment fragment = new DiscoverFragment();
         return fragment;
@@ -46,6 +42,9 @@ public class DiscoverFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         recyclerView = view.findViewById(R.id.discover_recyclerview);
+        mAddPost = (ImageView)view.findViewById(R.id.iv_add_post_discover);
+
+        mAddPost.setImageResource(R.drawable.ic_baseline_add_post);
 
         LinkedList<Discover> discovers = new LinkedList<>();
         ArrayList<Integer> images = new ArrayList<>();

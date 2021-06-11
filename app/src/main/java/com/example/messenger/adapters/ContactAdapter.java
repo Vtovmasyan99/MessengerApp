@@ -66,6 +66,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
             @Override
             public void onClick(View v) {
                 mMainViewModel.setCurrentContactMutableLiveData(contact);
+                mMainViewModel.setFragmentBeforeClick(2);
                 setCurrentFragment(new ChatRoomFragment());
             }
         });

@@ -48,15 +48,19 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
                     switch (item.getItemId()) {
                         case R.id.chats:
+                            showSearchContactView();
                             setCurrentFragment(chatsFragment);
                             return true;
                         case R.id.contacts:
+                            showSearchContactView();
                             setCurrentFragment(contactsFragment);
                             return true;
                         case R.id.discover:
+                            hideSearchContactView();
                             setCurrentFragment(discoverFragment);
                             return true;
                         case R.id.profile:
+                            hideSearchContactView();
                             setCurrentFragment(profileFragment);
                             return true;
                     }
@@ -103,6 +107,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void showBotNavAndSearchBar() {
         bottomNavigationView.setVisibility(View.VISIBLE);
+        searchView.setVisibility(View.VISIBLE);
+    }
+
+    public void hideSearchContactView() {
+        searchView.setVisibility(View.GONE);
+    }
+    public void showSearchContactView() {
         searchView.setVisibility(View.VISIBLE);
     }
 
