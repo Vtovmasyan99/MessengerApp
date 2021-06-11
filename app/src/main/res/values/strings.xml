@@ -21,6 +21,9 @@
     <string name="nickname11">Bruce</string>
     <string name="nickname12">Leila</string>
 
+    <string name="like">Like</string>
+    <string name="comment">Comment</string>
+
 
     <string name="sentence1"> Hey bro, how are you doing? </string>
     <string name="sentence2"> Im kinda busy today </string>
