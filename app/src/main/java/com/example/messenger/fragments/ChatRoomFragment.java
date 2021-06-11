@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -16,17 +17,22 @@ import android.widget.TextView;
 
 import com.example.messenger.activities.MainActivity;
 import com.example.messenger.R;
+import com.example.messenger.models.Contact;
+import com.example.messenger.viewmodels.MainViewModel;
 
 
 public class ChatRoomFragment extends Fragment {
-    ImageView mOtherUserAvatar;
-    TextView mChatName;
-    RecyclerView mRecyclerView;
-    Button mBackButton;
+    private ImageView mOtherUserAvatar;
+    private TextView mChatName;
+    private RecyclerView mRecyclerView;
+    private Button mBackButton;
+
+    private MainViewModel mMainViewModel;
+
+    private Contact mCurrentContact;
 
 
     public ChatRoomFragment() {
-       // Required empty public constructor
     }
 
 
@@ -52,11 +58,13 @@ public class ChatRoomFragment extends Fragment {
         mChatName = view.findViewById(R.id.tv_nickname_chatroom);
         mRecyclerView = view.findViewById(R.id.messages_recyclerview);
         mBackButton = view.findViewById(R.id.btn_back_chat_room);
+        mMainViewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
+
+        mCurrentContact = mMainViewModel.getCurrentContactMutableLiveData().getValue();
 
 
-        String chatterName = "John Cole";
-        mChatName.setText(chatterName);
-        mOtherUserAvatar.setImageResource(R.drawable.friend);
+        mChatName.setText(mCurrentContact.getNickname());
+        mOtherUserAvatar.setImageResource(mCurrentContact.getAvatarIcon());
         mBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
