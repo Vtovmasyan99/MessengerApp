@@ -62,11 +62,8 @@ public class ChatRoomFragment extends Fragment {
         mBackButton.setImageResource(R.drawable.ic_baseline_back);
 
         mUseCamera = (ImageView) view.findViewById(R.id.iv_use_camera_message_room);
-        mUseCamera.setImageResource(R.drawable.ic_baseline_camera);
         mUseGallery = (ImageView)view.findViewById(R.id.iv_use_gallery_message_room);
-        mUseGallery.setImageResource(R.drawable.ic_baseline_gallery);
         mUseRecorder = (ImageView)view.findViewById(R.id.iv_use_recorder_message_room);
-        mUseRecorder.setImageResource(R.drawable.ic_baseline_voice);
         mSendMessage = (ImageView) view.findViewById(R.id.iv_send_message_room);
         mSendMessage.setImageResource(R.drawable.ic_baseline_send);
         mSendLocation = (ImageView)view.findViewById(R.id.iv_send_location_message_room);

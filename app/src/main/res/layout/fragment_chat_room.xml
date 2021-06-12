@@ -61,64 +61,88 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/messages_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        tools:listitem="@layout/item_recycle_message">
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:id="@+id/iv_use_camera_message_room"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="3dp" />
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_use_gallery_message_room"
+            app:layout_constraintStart_toEndOf="@+id/iv_use_gallery_message_room"
+            app:layout_constraintTop_toTopOf="@+id/iv_use_gallery_message_room"
+            app:srcCompat="@drawable/ic_baseline_camera" />
 
         <ImageView
             android:id="@+id/iv_use_gallery_message_room"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="3dp" />
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_use_recorder_message_room"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/iv_use_recorder_message_room"
+            app:srcCompat="@drawable/ic_baseline_gallery" />
 
         <ImageView
             android:id="@+id/iv_use_recorder_message_room"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginLeft="1dp"
-             />
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_send_location_message_room"
+            app:layout_constraintStart_toEndOf="@+id/iv_use_camera_message_room"
+            app:layout_constraintTop_toTopOf="@+id/iv_send_location_message_room"
+            app:srcCompat="@drawable/ic_baseline_voice" />
+
         <ImageView
             android:id="@+id/iv_send_location_message_room"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="3dp" />
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_send_message_room"
+            app:layout_constraintStart_toEndOf="@+id/iv_use_recorder_message_room"
+            app:layout_constraintTop_toTopOf="@+id/iv_send_message_room"
+            app:srcCompat="@drawable/ic_baseline_add_location" />
 
         <EditText
             android:id="@+id/et_write_message_room"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:hint="Write a message..."
             android:textColor="@color/white"
             android:textColorHint="@color/white"
-            android:layout_margin="3dp"/>
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_send_location_message_room"
+            app:layout_constraintEnd_toStartOf="@+id/iv_send_message_room"
+            app:layout_constraintStart_toEndOf="@+id/iv_send_location_message_room"
+            app:layout_constraintTop_toTopOf="@+id/iv_send_location_message_room" />
 
         <ImageView
             android:id="@+id/iv_send_message_room"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="3dp" />
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/ic_baseline_send" />
 
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
