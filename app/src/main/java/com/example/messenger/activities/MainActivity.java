@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 
 import com.example.messenger.R;
+import com.example.messenger.models.UserModel;
 import com.example.messenger.viewmodels.MainViewModel;
 import com.example.messenger.fragments.DiscoverFragment;
 import com.example.messenger.fragments.ChatsFragment;
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText searchView;
 
     private MainViewModel mMainViewModel;
-
+    private UserModel myUser=new UserModel();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,12 @@ public class MainActivity extends AppCompatActivity {
 
         mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
+
+
         initViews();
+        initMyUser();
+
+        mMainViewModel.setMyUserMutableLiveData(myUser);
 
         Fragment profileFragment = new ProfileFragment();
         Fragment chatsFragment = new ChatsFragment();
@@ -94,6 +100,16 @@ public class MainActivity extends AppCompatActivity {
     private void initViews() {
         searchView = findViewById(R.id.et_search_main);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
+    }
+    private void initMyUser() {
+        myUser.setRealName("John Stones");
+        myUser.setBirthday("20.12.1998");
+        myUser.setEmail("John@gmail.com");
+        myUser.setAvatar(R.drawable.avatar);
+        myUser.setGender("Male");
+        myUser.setId(1);
+        myUser.setUsername("username1");
+        myUser.setPassword("PASSWORD1");
     }
 
     private void setCurrentFragment(Fragment fragment) {

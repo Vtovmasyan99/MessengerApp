@@ -16,16 +16,18 @@ import android.widget.TextView;
 
 import com.example.messenger.R;
 import com.example.messenger.models.UserModel;
+import com.example.messenger.viewmodels.MainViewModel;
 
 
 public class ProfileFragment extends Fragment {
-    private UserModel mUser;
+    private UserModel myUser;
     TextView mRealName;
     TextView mBirthDay;
     TextView mGender;
     TextView mEmail;
     ImageView mAvatar;
     Button mEditProfile;
+    MainViewModel mMainViewModel;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -60,10 +62,10 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull  View view, @Nullable  Bundle savedInstanceState) {
-        mUser = new UserModel("username1", "password1", "John Stones", 1,
-                R.drawable.avatar, "male", "user@gmail.com");
-
-
+//        myUser = new UserModel("username1", "password1", "John Stones", 1,
+//                R.drawable.avatar, "male", "user@gmail.com");
+        mMainViewModel = ViewModelProviders.of(requireActivity()).get(MainViewModel.class);
+        myUser = mMainViewModel.getMyUserMutableLiveData().getValue();
         mRealName = (TextView)view.findViewById(R.id.tv_real_name_profile);
         mBirthDay = (TextView)view.findViewById(R.id.tv_birthday_profile);
         mGender = (TextView)view.findViewById(R.id.tv_gender_profile);
@@ -71,11 +73,11 @@ public class ProfileFragment extends Fragment {
         mAvatar = (ImageView)view.findViewById(R.id.iv_avatar_profile);
         mEditProfile = (Button)view.findViewById(R.id.btn_edit_profile);
 
-        mRealName.setText(mUser.getRealName());
-        mBirthDay.setText(mUser.getBirthday());
-        mGender.setText(mUser.getGender());
-        mEmail.setText(mUser.getEmail());
-        mAvatar.setImageResource(mUser.getAvatar());
+        mRealName.setText(myUser.getRealName());
+        mBirthDay.setText(myUser.getBirthday());
+        mGender.setText(myUser.getGender());
+        mEmail.setText(myUser.getEmail());
+        mAvatar.setImageResource(myUser.getAvatar());
 
         super.onViewCreated(view, savedInstanceState);
 

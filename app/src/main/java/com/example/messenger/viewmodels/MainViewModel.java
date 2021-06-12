@@ -5,12 +5,14 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.messenger.models.Chat;
 import com.example.messenger.models.Contact;
+import com.example.messenger.models.UserModel;
 
 public class MainViewModel extends ViewModel {
 
     private final MutableLiveData<String> searchInputMutableLiveData = new MutableLiveData<>();
     private final MutableLiveData<Contact> currentContactMutableLiveData = new MutableLiveData<>();
     private final MutableLiveData<Chat> currentChatMutableLiveData = new MutableLiveData<>();
+    private final MutableLiveData<UserModel> myUserMutableLiveData = new MutableLiveData<>();
     private int fragmentBeforeClick;
 
     public MutableLiveData<String> getSearchInputMutableLiveData() {
@@ -44,5 +46,13 @@ public class MainViewModel extends ViewModel {
 
     public int getFragmentBeforeClick() {
         return fragmentBeforeClick;
+    }
+
+    public void setMyUserMutableLiveData(UserModel myUserMutableLiveData) {
+        this.myUserMutableLiveData.setValue(myUserMutableLiveData);
+    }
+
+    public MutableLiveData<UserModel> getMyUserMutableLiveData() {
+        return myUserMutableLiveData;
     }
 }
