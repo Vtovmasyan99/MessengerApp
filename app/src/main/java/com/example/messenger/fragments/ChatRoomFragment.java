@@ -65,6 +65,14 @@ public class ChatRoomFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mOtherUserAvatar = view.findViewById(R.id.iv_avatar_chatroom);
+        mOtherUserAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setCurrentFragmentWithBackFunction(new OtherUserProfile());
+
+            }
+        });
+
         mChatName = view.findViewById(R.id.tv_nickname_chatroom);
         mRecyclerView = view.findViewById(R.id.messages_recyclerview);
         mBackButton = view.findViewById(R.id.iv_back_chat_room);
@@ -138,5 +146,8 @@ public class ChatRoomFragment extends Fragment {
 
     private void setCurrentFragment(Fragment fragment) {
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, fragment).commit();
+    }
+    private void setCurrentFragmentWithBackFunction(Fragment fragment) {
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.flFragment, fragment).commit();
     }
 }
