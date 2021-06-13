@@ -44,7 +44,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             return new MessageViewHolder(view);
         }
         else {
-            return new MessageViewHolder2(view);
+            return new MessageViewHolder2(view2);
         }
 
 
@@ -102,5 +102,9 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             nickname = (TextView)itemView.findViewById(R.id.tv_nickname_message_room);
 
         }
+    }
+    public void setData(MessageModel newData) {
+        this.data.add(newData);
+        notifyDataSetChanged();
     }
 }

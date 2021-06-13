@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,6 +33,7 @@ public class ChatRoomFragment extends Fragment {
     private TextView mChatName;
     private RecyclerView mRecyclerView;
     private ImageView mBackButton;
+    private EditText mMessageText;
 
     ImageView mUseCamera, mUseGallery, mUseRecorder, mSendMessage, mSendLocation;
     private MainViewModel mMainViewModel;
@@ -76,6 +78,9 @@ public class ChatRoomFragment extends Fragment {
         mSendLocation = (ImageView)view.findViewById(R.id.iv_send_location_message_room);
         mSendLocation.setImageResource(R.drawable.ic_baseline_add_location);
 
+        mMessageText = (EditText)view.findViewById(R.id.et_write_message_room) ;
+
+
         mMainViewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
 
         mCurrentContact = mMainViewModel.getCurrentContactMutableLiveData().getValue();
@@ -108,6 +113,17 @@ public class ChatRoomFragment extends Fragment {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(messagesAdapter);
+
+
+        mSendMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String messageText = mMessageText.getText().toString();
+                mMessageText.setText("", TextView.BufferType.EDITABLE);
+                MessageModel newMessage = new MessageModel(5, myUser.getId(),  myUser.getRealName(),messageText, myUser.getAvatar() );
+                messagesAdapter.setData(newMessage);
+            }
+        });
 
 
 
