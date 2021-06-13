@@ -8,12 +8,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.messenger.R;
+import com.example.messenger.helpers.SecurePrefsHelper;
 import com.example.messenger.models.Discover;
 import com.example.messenger.adapters.DiscoverAdapter;
 
@@ -45,6 +47,8 @@ public class DiscoverFragment extends Fragment {
         mAddPost = (ImageView)view.findViewById(R.id.iv_add_post_discover);
 
         mAddPost.setImageResource(R.drawable.ic_baseline_add_post);
+
+        Log.e("Arzaqancyan", "onViewCreated: "+ SecurePrefsHelper.getContactsFromSecurePrefs(getActivity()).size());
 
         LinkedList<Discover> discovers = new LinkedList<>();
         ArrayList<Integer> images = new ArrayList<>();

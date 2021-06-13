@@ -48,7 +48,7 @@ public class SecurePrefsHelper {
     // ======
 
     // CREATE
-    public static void saveOrdersInSecurePrefs(List<Contact> contacts, Activity activity) {
+    public static void saveContactsInSecurePrefs(List<Contact> contacts, Activity activity) {
         Gson gson = new Gson();
 
         String contactsAsJson = gson.toJson(contacts);
@@ -60,7 +60,7 @@ public class SecurePrefsHelper {
     }
 
     // READ - ALL
-    public static List<Contact> getOrdersFromSecurePrefs(Activity activity) {
+    public static List<Contact> getContactsFromSecurePrefs(Activity activity) {
         Gson gson = new Gson();
 
         if (activity != null) {
@@ -80,7 +80,7 @@ public class SecurePrefsHelper {
     }
 
     // DELETE
-    public static void removeOrdersFromSecurePrefs(Context context) {
+    public static void removeContactsFromSecurePrefs(Context context) {
         if (context != null) {
             SecurePreferences sprefs = new SecurePreferences(context, PREFERENCE_NAME, SECURE_KEY, true);
             sprefs.removeValue("contacts");

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.messenger.R;
+import com.example.messenger.helpers.SecurePrefsHelper;
 import com.example.messenger.models.Contact;
 import com.example.messenger.adapters.ContactAdapter;
 import com.example.messenger.viewmodels.MainViewModel;
@@ -67,6 +68,9 @@ public class ContactsFragment extends Fragment {
         mContacts.add(new Contact(getString(R.string.nickname5), R.drawable.avatar_male));
         mContacts.add(new Contact(getString(R.string.nickname6), R.drawable.avatar_female));
         mContacts.add(new Contact(getString(R.string.nickname11), R.drawable.avatar_male));
+
+        SecurePrefsHelper.saveContactsInSecurePrefs(mContacts, getActivity());
+
 
         ContactAdapter contactAdapter = new ContactAdapter(mContacts, getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

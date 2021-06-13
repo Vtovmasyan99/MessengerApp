@@ -103,8 +103,7 @@ public class ChatRoomFragment extends Fragment {
             public void onClick(View v) {
                 if (fragmentBeforeClick == 1) {
                     setCurrentFragment(new ChatsFragment());
-                }
-                else {
+                } else {
                     setCurrentFragment(new ContactsFragment());
 
                 }
@@ -148,6 +147,6 @@ public class ChatRoomFragment extends Fragment {
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, fragment).commit();
     }
     private void setCurrentFragmentWithBackFunction(Fragment fragment) {
-        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.flFragment, fragment).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.flFragment, fragment).addToBackStack("chatRoom").commit();
     }
 }
