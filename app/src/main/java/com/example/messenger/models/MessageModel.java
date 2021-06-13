@@ -9,20 +9,23 @@ public class MessageModel {
     private LocalDateTime messageDateTime;
     private String messageText;
     private String fileURL;
-    MessageModel(int messageId, int senderId, String senderUsername, String messageText) {
+    private int avatar;
+    public MessageModel(int messageId, int senderId, String senderUsername, String messageText, int avatar) {
         this.messageId = messageId;
         this.senderId = senderId;
         this.senderUsername = senderUsername;
         this.messageText = messageText;
         this.messageDateTime = LocalDateTime.now();
+        this.avatar = avatar;
     }
-    MessageModel(int messageId, int senderId, String senderUsername, String messageText, String fileURL) {
+    public MessageModel(int messageId, int senderId, String senderUsername, String messageText, String fileURL, int avatar) {
         this.messageId = messageId;
         this.senderId = senderId;
         this.senderUsername = senderUsername;
         this.messageText = messageText;
         this.fileURL = fileURL;
         this.messageDateTime = LocalDateTime.now();
+        this.avatar = avatar;
     }
 
     public int getSenderId() {
@@ -47,5 +50,9 @@ public class MessageModel {
 
     public LocalDateTime getMessageDateTime() {
         return messageDateTime;
+    }
+
+    public int getAvatar() {
+        return avatar;
     }
 }

@@ -12,12 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.messenger.R;
 import com.example.messenger.models.Discover;
+import com.example.messenger.viewmodels.MainViewModel;
 
 import java.util.LinkedList;
 
 public class DiscoverAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private LinkedList<Discover> data;
     private Context context;
+
 
     public static final int LESS_FOUR_TYPE = 0;
     public static final int FOUR_TYPE = 1;

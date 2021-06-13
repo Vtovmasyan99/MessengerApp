@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -17,8 +18,13 @@ import android.widget.TextView;
 
 import com.example.messenger.activities.MainActivity;
 import com.example.messenger.R;
+import com.example.messenger.adapters.MessagesAdapter;
 import com.example.messenger.models.Contact;
+import com.example.messenger.models.MessageModel;
+import com.example.messenger.models.UserModel;
 import com.example.messenger.viewmodels.MainViewModel;
+
+import java.util.LinkedList;
 
 
 public class ChatRoomFragment extends Fragment {
@@ -31,6 +37,7 @@ public class ChatRoomFragment extends Fragment {
     private MainViewModel mMainViewModel;
 
     private Contact mCurrentContact;
+    private UserModel myUser;
 
 
     public ChatRoomFragment() {
@@ -74,6 +81,8 @@ public class ChatRoomFragment extends Fragment {
         mCurrentContact = mMainViewModel.getCurrentContactMutableLiveData().getValue();
         int fragmentBeforeClick = mMainViewModel.getFragmentBeforeClick();
 
+        myUser = mMainViewModel.getMyUserMutableLiveData().getValue();
+
         mChatName.setText(mCurrentContact.getNickname());
         mOtherUserAvatar.setImageResource(mCurrentContact.getAvatarIcon());
         mBackButton.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +97,17 @@ public class ChatRoomFragment extends Fragment {
                 }
             }
         });
+
+        LinkedList<MessageModel> messages = new LinkedList<>();
+        messages.add(new MessageModel(1,3, mCurrentContact.getNickname(), "How are you?", mCurrentContact.getAvatarIcon()));
+        messages.add(new MessageModel(2,myUser.getId(), myUser.getRealName(), "I am fine. and you?", myUser.getAvatar()));
+        messages.add(new MessageModel(3,3, mCurrentContact.getNickname(), "Mee too, thanks!", mCurrentContact.getAvatarIcon()));
+        messages.add(new MessageModel(4,myUser.getId(), myUser.getRealName(), "See you soon", myUser.getAvatar()));
+
+        MessagesAdapter messagesAdapter = new MessagesAdapter(messages, getContext());
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setAdapter(messagesAdapter);
 
 
 

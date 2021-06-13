@@ -15,14 +15,14 @@
         android:layout_marginRight="10dp">
 
         <TextView
-            android:id="@+id/tv_message_time_chatroom"
+            android:id="@+id/tv_my_message_time_chatroom"
             android:layout_width="fill_parent"
             android:layout_height="25dp"
             android:gravity="end"
             android:text="2021/01/01" />
 
         <TextView
-            android:id="@+id/tv_message_text_chatroom"
+            android:id="@+id/tv_my_message_text_chatroom"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:gravity="center"
@@ -39,14 +39,14 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/iv_avatar_message_room"
+            android:id="@+id/iv_my_avatar_message_room"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:contentDescription="@string/app_name"
             android:src="@drawable/avatar" />
 
         <TextView
-            android:id="@+id/tv_nickname_message_room"
+            android:id="@+id/tv_my_nickname_message_room"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Nickname"
