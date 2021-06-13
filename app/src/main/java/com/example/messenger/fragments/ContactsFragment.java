@@ -55,21 +55,8 @@ public class ContactsFragment extends Fragment {
 
 
 
-        List<Contact> mContacts = new ArrayList<>();
+        List<Contact> mContacts = SecurePrefsHelper.getContactsFromSecurePrefs(getActivity());
 
-        mContacts.add(new Contact(getString(R.string.nickname1), R.drawable.avatar_male));
-        mContacts.add(new Contact(getString(R.string.nickname10), R.drawable.avatar_female));
-        mContacts.add(new Contact(getString(R.string.nickname2), R.drawable.avatar_male));
-        mContacts.add(new Contact(getString(R.string.nickname9), R.drawable.avatar_female));
-        mContacts.add(new Contact(getString(R.string.nickname3), R.drawable.avatar_male));
-        mContacts.add(new Contact(getString(R.string.nickname8), R.drawable.avatar_female));
-        mContacts.add(new Contact(getString(R.string.nickname4), R.drawable.avatar_male));
-        mContacts.add(new Contact(getString(R.string.nickname7), R.drawable.avatar_female));
-        mContacts.add(new Contact(getString(R.string.nickname5), R.drawable.avatar_male));
-        mContacts.add(new Contact(getString(R.string.nickname6), R.drawable.avatar_female));
-        mContacts.add(new Contact(getString(R.string.nickname11), R.drawable.avatar_male));
-
-        SecurePrefsHelper.saveContactsInSecurePrefs(mContacts, getActivity());
 
 
         ContactAdapter contactAdapter = new ContactAdapter(mContacts, getContext());

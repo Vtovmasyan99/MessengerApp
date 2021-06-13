@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.example.messenger.activities.MainActivity;
 import com.example.messenger.R;
 import com.example.messenger.adapters.MessagesAdapter;
+import com.example.messenger.helpers.SecurePrefsHelper;
 import com.example.messenger.models.Contact;
 import com.example.messenger.models.MessageModel;
 import com.example.messenger.models.UserModel;
@@ -41,6 +42,7 @@ public class ChatRoomFragment extends Fragment {
     private Contact mCurrentContact;
     private UserModel myUser;
 
+    private LinkedList<MessageModel> mMessages;
 
     public ChatRoomFragment() {
     }
@@ -72,6 +74,8 @@ public class ChatRoomFragment extends Fragment {
 
             }
         });
+
+
 
         mChatName = view.findViewById(R.id.tv_nickname_chatroom);
         mRecyclerView = view.findViewById(R.id.messages_recyclerview);
@@ -111,12 +115,12 @@ public class ChatRoomFragment extends Fragment {
         });
 
         LinkedList<MessageModel> messages = new LinkedList<>();
-        messages.add(new MessageModel(1,3, mCurrentContact.getNickname(), "How are you?", mCurrentContact.getAvatarIcon()));
-        messages.add(new MessageModel(2,myUser.getId(), myUser.getRealName(), "I am fine. and you?", myUser.getAvatar()));
-        messages.add(new MessageModel(3,3, mCurrentContact.getNickname(), "Mee too, thanks!", mCurrentContact.getAvatarIcon()));
-        messages.add(new MessageModel(4,myUser.getId(), myUser.getRealName(), "See you soon", myUser.getAvatar()));
-
+        messages.add(new MessageModel(1,mCurrentContact.getId(), mCurrentContact.getNickname(), "Nice to add you as my friend!", mCurrentContact.getAvatarIcon()));
+        messages.add(new MessageModel(2,myUser.getId(), myUser.getRealName(), "Nice to add you too!", myUser.getAvatar()));
         MessagesAdapter messagesAdapter = new MessagesAdapter(messages, getContext());
+
+        mMessages = SecurePrefsHelper.getMessagesOfUserFromSecurePrefs(getActivity(), mCurrentContact.getId());
+        messagesAdapter.addData(mMessages);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(messagesAdapter);
@@ -126,8 +130,11 @@ public class ChatRoomFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String messageText = mMessageText.getText().toString();
+
                 mMessageText.setText("", TextView.BufferType.EDITABLE);
-                MessageModel newMessage = new MessageModel(5, myUser.getId(),  myUser.getRealName(),messageText, myUser.getAvatar() );
+                MessageModel newMessage = new MessageModel(5, myUser.getId(),  myUser.getRealName(),messageText, myUser.getAvatar());
+                mMessages.add(newMessage);
+                SecurePrefsHelper.saveMessagesOfUserInSecurePrefs(mMessages, getActivity(), mCurrentContact.getId());
                 messagesAdapter.setData(newMessage);
             }
         });

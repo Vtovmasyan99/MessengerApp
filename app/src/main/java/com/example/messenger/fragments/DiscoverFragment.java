@@ -22,11 +22,7 @@ import com.example.messenger.adapters.DiscoverAdapter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link DiscoverFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class DiscoverFragment extends Fragment {
     private RecyclerView recyclerView;
     ImageView mAddPost;

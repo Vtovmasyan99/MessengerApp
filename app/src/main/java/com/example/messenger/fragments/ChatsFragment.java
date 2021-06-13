@@ -15,11 +15,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.messenger.R;
+import com.example.messenger.helpers.SecurePrefsHelper;
 import com.example.messenger.models.Chat;
 import com.example.messenger.adapters.ChatsAdapter;
+import com.example.messenger.models.MessageModel;
 import com.example.messenger.viewmodels.MainViewModel;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -47,18 +50,17 @@ public class ChatsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         recyclerView = getView().findViewById(R.id.chats_recylerview);
         mMainViewModel = ViewModelProviders.of(requireActivity()).get(MainViewModel.class);
-        mChats = new ArrayList<>();
 
-        mChats.add(new Chat(getString(R.string.nickname1), R.drawable.avatar_male, getString(R.string.sentence1), "2021/01/01"));
-        mChats.add(new Chat(getString(R.string.nickname2), R.drawable.avatar_male, getString(R.string.sentence2), "2021/01/01"));
-        mChats.add(new Chat(getString(R.string.nickname3), R.drawable.avatar_male, getString(R.string.sentence3), "2021/01/03"));
-        mChats.add(new Chat(getString(R.string.nickname4), R.drawable.avatar_male, getString(R.string.sentence4), "2021/01/01"));
-        mChats.add(new Chat(getString(R.string.nickname5), R.drawable.avatar_male, getString(R.string.sentence5), "2020/01/01"));
-        mChats.add(new Chat(getString(R.string.nickname6), R.drawable.avatar_female, getString(R.string.sentence6), "2021/01/01"));
-        mChats.add(new Chat(getString(R.string.nickname7), R.drawable.avatar_female, getString(R.string.sentence7), "2021/01/01"));
-        mChats.add(new Chat(getString(R.string.nickname8), R.drawable.avatar_female, getString(R.string.sentence8), "2021/01/01"));
-        mChats.add(new Chat(getString(R.string.nickname9), R.drawable.avatar_female, getString(R.string.sentence9), "2021/01/01"));
-        mChats.add(new Chat(getString(R.string.nickname10), R.drawable.avatar_female, getString(R.string.sentence10), "2021/01/01"));
+
+        mChats = SecurePrefsHelper.getChatsFromSecurePrefs(getActivity());
+        for (Chat chat:mChats) {
+            int chatterId = chat.getId();
+            LinkedList<MessageModel> messages = SecurePrefsHelper.getMessagesOfUserFromSecurePrefs(getActivity(), chatterId);
+            if(messages.size()>0) {
+                chat.setLastSpeak(messages.getLast().getMessageText());
+            }
+           
+        }
 
         ChatsAdapter chatsAdapter = new ChatsAdapter(mChats, getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

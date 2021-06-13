@@ -18,8 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.messenger.R;
 import com.example.messenger.models.Contact;
 import com.example.messenger.fragments.ChatRoomFragment;
+import com.example.messenger.models.MessageModel;
 import com.example.messenger.viewmodels.MainViewModel;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactViewHolder> {

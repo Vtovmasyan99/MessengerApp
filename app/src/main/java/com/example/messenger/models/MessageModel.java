@@ -6,7 +6,7 @@ public class MessageModel {
     private int messageId;
     private String senderUsername;
     private int senderId;
-    private LocalDateTime messageDateTime;
+    private String messageDateTime;
     private String messageText;
     private String fileURL;
     private int avatar;
@@ -15,7 +15,7 @@ public class MessageModel {
         this.senderId = senderId;
         this.senderUsername = senderUsername;
         this.messageText = messageText;
-        this.messageDateTime = LocalDateTime.now();
+        this.messageDateTime = LocalDateTime.now().toString();
         this.avatar = avatar;
     }
     public MessageModel(int messageId, int senderId, String senderUsername, String messageText, String fileURL, int avatar) {
@@ -24,7 +24,7 @@ public class MessageModel {
         this.senderUsername = senderUsername;
         this.messageText = messageText;
         this.fileURL = fileURL;
-        this.messageDateTime = LocalDateTime.now();
+        this.messageDateTime = LocalDateTime.now().toString();
         this.avatar = avatar;
     }
 
@@ -48,7 +48,7 @@ public class MessageModel {
         return fileURL;
     }
 
-    public LocalDateTime getMessageDateTime() {
+    public String getMessageDateTime() {
         return messageDateTime;
     }
 

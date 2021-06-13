@@ -6,6 +6,10 @@ import androidx.lifecycle.ViewModelProviders;
 
 
 import com.example.messenger.R;
+import com.example.messenger.helpers.SecurePrefsHelper;
+import com.example.messenger.models.Chat;
+import com.example.messenger.models.Contact;
+import com.example.messenger.models.MessageModel;
 import com.example.messenger.models.UserModel;
 import com.example.messenger.viewmodels.MainViewModel;
 import com.example.messenger.fragments.DiscoverFragment;
@@ -20,6 +24,9 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -28,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText searchView;
 
     private MainViewModel mMainViewModel;
-    private UserModel myUser=new UserModel();
+    private UserModel myUser = new UserModel();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +45,10 @@ public class MainActivity extends AppCompatActivity {
         mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
 
-
         initViews();
         initMyUser();
+        initContacts();
+        initChats();
 
         mMainViewModel.setMyUserMutableLiveData(myUser);
 
@@ -95,12 +103,58 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+
     }
+
+    private void initContacts() {
+        List<Contact> mContacts = new ArrayList<>();
+        int id = 2;
+        mContacts.add(new Contact(getString(R.string.nickname1), R.drawable.avatar_male, 2, "username2", "Male"));
+        mContacts.add(new Contact(getString(R.string.nickname10), R.drawable.avatar_female, 3, "username3", "Female"));
+        mContacts.add(new Contact(getString(R.string.nickname2), R.drawable.avatar_male, 4, "username4", "Male"));
+        mContacts.add(new Contact(getString(R.string.nickname9), R.drawable.avatar_female, 5, "username5", "Female"));
+        mContacts.add(new Contact(getString(R.string.nickname3), R.drawable.avatar_male, 6, "username6", "Male"));
+        mContacts.add(new Contact(getString(R.string.nickname8), R.drawable.avatar_female, 7, "username7", "Female"));
+        mContacts.add(new Contact(getString(R.string.nickname4), R.drawable.avatar_male, 8, "username8", "Male"));
+        mContacts.add(new Contact(getString(R.string.nickname7), R.drawable.avatar_female, 9, "username9", "Female"));
+        mContacts.add(new Contact(getString(R.string.nickname5), R.drawable.avatar_male, 10, "username10", "Male"));
+        mContacts.add(new Contact(getString(R.string.nickname6), R.drawable.avatar_female, 11, "username11", "Female"));
+
+        SecurePrefsHelper.saveContactsInSecurePrefs(mContacts, this);
+
+
+    }
+
+    ;
+
+    private void initChats() {
+        ArrayList<Chat> mChats = new ArrayList<>();
+
+        mChats.add(new Chat(getString(R.string.nickname1), R.drawable.avatar_male, "", "2021/01/01", 2));
+        mChats.add(new Chat(getString(R.string.nickname10), R.drawable.avatar_female, "", "2021/01/01", 3));
+        mChats.add(new Chat(getString(R.string.nickname2), R.drawable.avatar_male, "", "2021/01/03", 4));
+        mChats.add(new Chat(getString(R.string.nickname9), R.drawable.avatar_female, "", "2021/01/01", 5));
+        mChats.add(new Chat(getString(R.string.nickname3), R.drawable.avatar_male, "", "2020/01/01", 6));
+        mChats.add(new Chat(getString(R.string.nickname8), R.drawable.avatar_female, "", "2021/01/01", 7));
+        mChats.add(new Chat(getString(R.string.nickname4), R.drawable.avatar_male, "", "2021/01/01", 8));
+        mChats.add(new Chat(getString(R.string.nickname7), R.drawable.avatar_female,"", "2021/01/01", 9));
+        mChats.add(new Chat(getString(R.string.nickname5), R.drawable.avatar_male, "", "2021/01/01", 10));
+        mChats.add(new Chat(getString(R.string.nickname6), R.drawable.avatar_female,"", "2021/01/01", 11));
+
+        SecurePrefsHelper.saveChatsInSecurePrefs(mChats, this);
+
+    }
+//    private void initMessages() {
+//        LinkedList<MessageModel> messages;
+//        messages.add()
+//    }
 
     private void initViews() {
         searchView = findViewById(R.id.et_search_main);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
     }
+
     private void initMyUser() {
         myUser.setRealName("John Stones");
         myUser.setBirthday("20.12.1998");
@@ -129,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
     public void hideSearchContactView() {
         searchView.setVisibility(View.GONE);
     }
+
     public void showSearchContactView() {
         searchView.setVisibility(View.VISIBLE);
     }

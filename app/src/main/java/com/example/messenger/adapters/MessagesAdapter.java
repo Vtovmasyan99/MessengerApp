@@ -8,10 +8,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.messenger.R;
 import com.example.messenger.models.MessageModel;
+import com.example.messenger.models.UserModel;
+import com.example.messenger.viewmodels.MainViewModel;
 
 import java.util.LinkedList;
 
@@ -20,15 +24,18 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private Context context;
     public static final int MY_MESSAGE = 0;
     public static final int OTHER_MESSAGE = 1;
-
+    private MainViewModel mMainViewModel;
+    private UserModel myUser;
     public MessagesAdapter(LinkedList<MessageModel> data, Context context) {
         this.data = data;
         this.context = context;
+        mMainViewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
+        myUser = mMainViewModel.getMyUserMutableLiveData().getValue();
     }
     @Override
     public int getItemViewType (int position){
         MessageModel messageModel = data.get(position);
-        if (messageModel.getSenderId() == 1) {
+        if (messageModel.getSenderId() == myUser.getId()) {
             return MY_MESSAGE;
         }
         else return OTHER_MESSAGE;
@@ -58,7 +65,8 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             messageViewHolder.avatar.setImageResource(messageModel.getAvatar());
             messageViewHolder.nickname.setText(messageModel.getSenderUsername());
             messageViewHolder.messageText.setText(messageModel.getMessageText());
-            messageViewHolder.messageDate.setText(messageModel.getMessageDateTime().toString());
+            messageViewHolder.messageDate.setText(messageModel.getMessageDateTime());
+            messageViewHolder.filename.setVisibility(View.GONE);
 
         }
         else {
@@ -66,7 +74,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             messageViewHolder2.avatar.setImageResource(messageModel.getAvatar());
             messageViewHolder2.nickname.setText(messageModel.getSenderUsername());
             messageViewHolder2.messageText.setText(messageModel.getMessageText());
-            messageViewHolder2.messageDate.setText(messageModel.getMessageDateTime().toString());
+            messageViewHolder2.messageDate.setText(messageModel.getMessageDateTime());
         }
     }
 
@@ -80,13 +88,14 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         TextView messageDate;
         TextView messageText;
         TextView nickname;
+        TextView filename;
         public MessageViewHolder (@NonNull View itemView) {
             super(itemView);
             avatar = (ImageView)itemView.findViewById(R.id.iv_my_avatar_message_room);
             messageDate = (TextView)itemView.findViewById(R.id.tv_my_message_time_chatroom);
             messageText = (TextView)itemView.findViewById(R.id.tv_my_message_text_chatroom);
             nickname = (TextView)itemView.findViewById(R.id.tv_my_nickname_message_room);
-
+            filename = (TextView)itemView.findViewById(R.id.tv_filename_chatroom);
         }
     }
     public static class MessageViewHolder2 extends RecyclerView.ViewHolder {
@@ -106,5 +115,13 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void setData(MessageModel newData) {
         this.data.add(newData);
         notifyDataSetChanged();
+    }
+    public void addData(LinkedList<MessageModel> newData) {
+        this.data.addAll(newData);
+        notifyDataSetChanged();
+
+    }
+    private AppCompatActivity getActivity() {
+        return (AppCompatActivity) context;
     }
 }

@@ -65,7 +65,7 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ChatsViewHol
     @Override
     public void onBindViewHolder(@NonNull ChatsViewHolder holder, int position) {
         Chat chat = mData.get(position);
-        Contact contact = new Contact( chat.getNickname(), chat.getAvatarIcon());
+        Contact contact = new Contact( chat.getNickname(), chat.getAvatarIcon(),chat.getId());
         holder.rootLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -5,7 +5,8 @@
     android:layout_marginBottom="8dp"
     android:paddingLeft="10dp"
     android:orientation="horizontal"
-    android:gravity="left">
+    android:gravity="left"
+    android:layout_marginTop="4dp">
 
     <LinearLayout
         android:layout_width="60dp"
@@ -33,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:orientation="vertical"
-        android:background="#A2F6BA">
+        android:background="#F4FDF7">
 
         <TextView
             android:id="@+id/tv_message_time_chatroom"
@@ -41,6 +42,7 @@
             android:layout_height="25dp"
             android:layout_marginEnd="20dp"
             android:gravity="end"
+            android:textColor="@color/black"
             android:text="2021/01/01" />
 
         <TextView
@@ -50,6 +52,7 @@
             android:gravity="center"
             android:text="@string/sentence1"
             android:textSize="16sp"
+            android:textColor="@color/black"
             android:textStyle="italic"/>
     </LinearLayout>
 
