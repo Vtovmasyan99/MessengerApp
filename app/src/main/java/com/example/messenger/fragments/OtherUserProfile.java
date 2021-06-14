@@ -2,31 +2,40 @@ package com.example.messenger.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.messenger.R;
+import com.example.messenger.models.Contact;
+import com.example.messenger.models.UserModel;
+import com.example.messenger.viewmodels.MainViewModel;
 
 public class OtherUserProfile extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    private String mParam1;
-    private String mParam2;
+    private TextView otherUserRealName;
+    private Button deleteContact, addContact, startMessage;
+    private ImageView avatar;
+    private MainViewModel mMainViewModel;
+    private Contact mCurrentContact;
+    private UserModel mUser;
+
 
     public OtherUserProfile() {
-        // Required empty public constructor
     }
 
     public static OtherUserProfile newInstance(String param1, String param2) {
         OtherUserProfile fragment = new OtherUserProfile();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -34,16 +43,47 @@ public class OtherUserProfile extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_other_user_profile, container, false);
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mMainViewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
+        mCurrentContact = mMainViewModel.getCurrentContactMutableLiveData().getValue();
+
+        avatar = (ImageView)view.findViewById(R.id.iv_avatar_other_profile);
+        otherUserRealName = (TextView)view.findViewById(R.id.tv_real_name_other_profile);
+        addContact = (Button)view.findViewById(R.id.btn_add_contact_other_profile);
+        deleteContact = (Button)view.findViewById(R.id.btn_delete_contact_other_profile);
+        startMessage = (Button)view.findViewById(R.id.btn_send_message_other_profile);
+
+
+        avatar.setImageResource(mCurrentContact.getAvatarIcon());
+        otherUserRealName.setText(mCurrentContact.getNickname());
+        addContact.setVisibility(View.GONE);
+
+        startMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setCurrentFragment(new ChatRoomFragment());
+            }
+        });
+
+
+
+
+    }
+    private void setCurrentFragment(Fragment fragment) {
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, fragment).commit();
+    }
+
 }

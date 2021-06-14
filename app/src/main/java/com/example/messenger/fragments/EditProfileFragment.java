@@ -23,8 +23,8 @@ import com.example.messenger.viewmodels.MainViewModel;
 
 public class EditProfileFragment extends Fragment {
 
-    ImageView mBackButton;
-    Button mSaveButton;
+    ImageView mBackButton, mAvatar;
+    Button mSaveButton, mChangeAvatar;
     EditText mSetUsername, mSetPassword, mSetRealName, mSetBirthday;
     UserModel myUser;
     MainViewModel mMainViewModel;
@@ -73,7 +73,8 @@ public class EditProfileFragment extends Fragment {
         mSetPassword.setText(myUser.getPassword(), TextView.BufferType.EDITABLE);
         mSetBirthday.setText(myUser.getBirthday(), TextView.BufferType.EDITABLE);
 
-
+        mAvatar = (ImageView)view.findViewById(R.id.iv_avatar_edit_profile);
+        mAvatar.setImageResource(myUser.getAvatar());
 
         mBackButton = (ImageView) view.findViewById(R.id.iv_back_edit_profile);
         mBackButton.setImageResource(R.drawable.ic_baseline_back);
@@ -96,6 +97,14 @@ public class EditProfileFragment extends Fragment {
                 setCurrentFragment(new ProfileFragment());
             }
         });
+        mChangeAvatar = (Button)view.findViewById(R.id.iv_change_avatar_edit_profile);
+        mChangeAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         super.onViewCreated(view, savedInstanceState);
     }
 
