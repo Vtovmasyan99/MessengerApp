@@ -13,7 +13,9 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
         android:background="#A2F6BA"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="end"
+        android:layout_gravity="end">
 
         <TextView
             android:id="@+id/tv_my_message_time_chatroom"
@@ -27,7 +29,7 @@
             android:id="@+id/tv_my_message_text_chatroom"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:gravity="right"
+            android:gravity="end"
             android:textColor="@color/black"
             android:text="@string/sentence1"
             android:textSize="16sp"
@@ -38,7 +40,20 @@
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:text="document_1.txt   download"
-            tools:visibility="gone" />
+            android:visibility="gone" />
+        <ImageView
+            android:layout_gravity="end"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/iv_my_image_send_chatroom"
+            android:src="@drawable/image1"
+            android:visibility="gone"
+            />
+        <VideoView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:id="@+id/vv_my_video_send_chatroom"
+            android:visibility="gone" />
     </LinearLayout>
 
 

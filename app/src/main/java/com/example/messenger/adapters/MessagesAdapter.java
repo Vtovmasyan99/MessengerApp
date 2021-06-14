@@ -66,6 +66,14 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             messageViewHolder.nickname.setText(messageModel.getSenderUsername());
             messageViewHolder.messageText.setText(messageModel.getMessageText());
             messageViewHolder.messageDate.setText(messageModel.getMessageDateTime());
+            if(messageModel.getImageSend() !=null) {
+                messageViewHolder.picture.setImageURI(messageModel.getImageSend());
+                messageViewHolder.picture.setVisibility(View.VISIBLE);
+            }
+            else {
+                messageViewHolder.picture.setVisibility(View.GONE);
+
+            }
             messageViewHolder.filename.setVisibility(View.GONE);
 
         }
@@ -89,6 +97,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         TextView messageText;
         TextView nickname;
         TextView filename;
+        ImageView picture;
         public MessageViewHolder (@NonNull View itemView) {
             super(itemView);
             avatar = (ImageView)itemView.findViewById(R.id.iv_my_avatar_message_room);
@@ -96,6 +105,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             messageText = (TextView)itemView.findViewById(R.id.tv_my_message_text_chatroom);
             nickname = (TextView)itemView.findViewById(R.id.tv_my_nickname_message_room);
             filename = (TextView)itemView.findViewById(R.id.tv_filename_chatroom);
+            picture = (ImageView)itemView.findViewById(R.id.iv_my_image_send_chatroom);
         }
     }
     public static class MessageViewHolder2 extends RecyclerView.ViewHolder {

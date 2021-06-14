@@ -1,14 +1,26 @@
 package com.example.messenger.fragments;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +28,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.messenger.activities.MainActivity;
 import com.example.messenger.R;
@@ -30,6 +43,10 @@ import java.util.LinkedList;
 
 
 public class ChatRoomFragment extends Fragment {
+    private static final int IMAGE_PICK_CODE = 1000;
+    private static final int PERMISSION_CODE = 1001;
+
+    private static final int CAMERA_REQUEST_CODE = 200;
     private ImageView mOtherUserAvatar;
     private TextView mChatName;
     private RecyclerView mRecyclerView;
@@ -41,8 +58,10 @@ public class ChatRoomFragment extends Fragment {
 
     private Contact mCurrentContact;
     private UserModel myUser;
+    private MessageModel mNewMessage;
 
     private LinkedList<MessageModel> mMessages;
+    private MessagesAdapter messagesAdapter;
 
     public ChatRoomFragment() {
     }
@@ -117,7 +136,7 @@ public class ChatRoomFragment extends Fragment {
         LinkedList<MessageModel> messages = new LinkedList<>();
         messages.add(new MessageModel(1,mCurrentContact.getId(), mCurrentContact.getNickname(), "Nice to add you as my friend!", mCurrentContact.getAvatarIcon()));
         messages.add(new MessageModel(2,myUser.getId(), myUser.getRealName(), "Nice to add you too!", myUser.getAvatar()));
-        MessagesAdapter messagesAdapter = new MessagesAdapter(messages, getContext());
+        messagesAdapter = new MessagesAdapter(messages, getContext());
 
         mMessages = SecurePrefsHelper.getMessagesOfUserFromSecurePrefs(getActivity(), mCurrentContact.getId());
         messagesAdapter.addData(mMessages);
@@ -132,12 +151,34 @@ public class ChatRoomFragment extends Fragment {
                 String messageText = mMessageText.getText().toString();
 
                 mMessageText.setText("", TextView.BufferType.EDITABLE);
-                MessageModel newMessage = new MessageModel(5, myUser.getId(),  myUser.getRealName(),messageText, myUser.getAvatar());
-                mMessages.add(newMessage);
+                mNewMessage = new MessageModel(5, myUser.getId(),  myUser.getRealName(),messageText, myUser.getAvatar());
+                mMessages.add(mNewMessage);
                 SecurePrefsHelper.saveMessagesOfUserInSecurePrefs(mMessages, getActivity(), mCurrentContact.getId());
-                messagesAdapter.setData(newMessage);
+                messagesAdapter.setData(mNewMessage);
             }
         });
+
+        mUseGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(Build.VERSION.SDK_INT >=Build.VERSION_CODES.M) {
+                    if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                        String [] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
+                        requestPermissions(permissions, PERMISSION_CODE);
+                    }
+                    else {
+                        pickImageFromGallery();
+
+                    }
+                }
+                else {
+                        pickImageFromGallery();
+                }
+
+            }
+        }
+        );
 
 
 
@@ -156,4 +197,48 @@ public class ChatRoomFragment extends Fragment {
     private void setCurrentFragmentWithBackFunction(Fragment fragment) {
         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.flFragment, fragment).addToBackStack("chatRoom").commit();
     }
+
+    private void pickImageFromGallery() {
+        Intent cameraIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        cameraIntent.setType("image/*");
+        startActivityForResult(cameraIntent, 1000);
+//        if (cameraIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+//
+//        }
+
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE) {
+            Uri returnUri = data.getData();
+            mNewMessage = new MessageModel(6, myUser.getId(), myUser.getRealName(), "", myUser.getAvatar(), returnUri);
+            Log.i("Arzaqantsyan", "onActivityResult: "+mCurrentContact.getId()+",  real name "+myUser.getRealName()+" have avatar?: "+myUser.getAvatar() );
+            mMessages.add(mNewMessage);
+//            SecurePrefsHelper.saveMessagesOfUserInSecurePrefs(mMessages, getActivity(), mCurrentContact.getId());
+            messagesAdapter.setData(mNewMessage);
+
+        }
+
+
+
+    };
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull  String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case PERMISSION_CODE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    pickImageFromGallery();
+                }
+                else {
+                    Toast.makeText(getActivity(), "Permission denied...", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        }
+    }
+
+
 }
