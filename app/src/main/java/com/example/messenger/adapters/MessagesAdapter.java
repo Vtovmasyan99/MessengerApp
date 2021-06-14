@@ -67,7 +67,14 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         MessageModel messageModel = data.get(position);
         if (holder.getItemViewType()==MY_MESSAGE) {
             MessageViewHolder messageViewHolder = (MessageViewHolder) holder;
-            messageViewHolder.avatar.setImageResource(messageModel.getAvatar());
+            if(messageModel.getAvatarUri()!=null) {
+                messageViewHolder.avatar.setImageURI(Uri.parse(messageModel.getAvatarUri()));
+            }
+            else
+            {
+                messageViewHolder.avatar.setImageResource(messageModel.getAvatar());
+
+            }
             messageViewHolder.nickname.setText(messageModel.getSenderUsername());
             messageViewHolder.messageText.setText(messageModel.getMessageText());
             messageViewHolder.messageDate.setText(messageModel.getMessageDateTime());

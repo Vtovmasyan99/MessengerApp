@@ -6,6 +6,7 @@ import android.content.Context;
 import com.example.messenger.models.Chat;
 import com.example.messenger.models.Contact;
 import com.example.messenger.models.MessageModel;
+import com.example.messenger.models.UserModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -51,6 +52,14 @@ public class SecurePrefsHelper {
     // ======
 
     // CREATE
+    public static void saveMyUserInSecurePrefs(UserModel myUser, Activity activity) {
+        Gson gson = new Gson();
+        String myUserAsJson = gson.toJson(myUser);
+        if (activity!=null) {
+            SecurePreferences sprefs = new SecurePreferences(activity, PREFERENCE_NAME, SECURE_KEY, true);
+            sprefs.put("myuser", myUserAsJson);
+        }
+    }
     public static void saveContactsInSecurePrefs(List<Contact> contacts, Activity activity) {
         Gson gson = new Gson();
 
@@ -102,6 +111,20 @@ public class SecurePrefsHelper {
             return new ArrayList<>();
         }
     }
+    public static UserModel getMyUserInSecurePrefs(Activity activity) {
+        Gson gson = new Gson();
+        if (activity!=null) {
+            SecurePreferences sprefs = new SecurePreferences(activity, PREFERENCE_NAME, SECURE_KEY, true);
+            String myUserAsJson = sprefs.getString("myuser");
+            if(myUserAsJson != null) {
+                UserModel myUser = gson.fromJson(myUserAsJson, new TypeToken<UserModel>() {}.getType());
+                return myUser;
+            }
+            else return null;
+        }
+        else return null;
+    }
+
     public static LinkedList<MessageModel> getMessagesOfUserFromSecurePrefs(Activity activity, int otherUserId) {
         Gson gson = new Gson();
         if (activity!=null) {
@@ -135,17 +158,24 @@ public class SecurePrefsHelper {
     }
 
     // DELETE
-    public static void removeContactsFromSecurePrefs(Context context) {
-        if (context != null) {
-            SecurePreferences sprefs = new SecurePreferences(context, PREFERENCE_NAME, SECURE_KEY, true);
+    public static void removeContactsFromSecurePrefs(Activity activity) {
+        if (activity != null) {
+            SecurePreferences sprefs = new SecurePreferences(activity, PREFERENCE_NAME, SECURE_KEY, true);
             sprefs.removeValue("contacts");
         }
     }
 
-    public static void removeChatsFromSecurePrefs(Context context) {
-        if (context!=null) {
-            SecurePreferences sprefs = new SecurePreferences(context, PREFERENCE_NAME, SECURE_KEY, true);
+    public static void removeChatsFromSecurePrefs(Activity activity) {
+        if (activity!=null) {
+            SecurePreferences sprefs = new SecurePreferences(activity, PREFERENCE_NAME, SECURE_KEY, true);
             sprefs.removeValue("chats");
+        }
+    }
+
+    public static void removeMyUserFromSecurePrefs(Activity activity) {
+        if(activity!=null) {
+            SecurePreferences sprefs = new SecurePreferences(activity, PREFERENCE_NAME, SECURE_KEY, true);
+            sprefs.removeValue("myuser");
         }
     }
 

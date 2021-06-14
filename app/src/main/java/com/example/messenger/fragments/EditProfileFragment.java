@@ -1,5 +1,8 @@
 package com.example.messenger.fragments;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -22,6 +25,8 @@ import com.example.messenger.models.UserModel;
 import com.example.messenger.viewmodels.MainViewModel;
 
 public class EditProfileFragment extends Fragment {
+    private static final int IMAGE_PICK_CODE = 1000;
+
 
     ImageView mBackButton, mAvatar;
     Button mSaveButton, mChangeAvatar;
@@ -74,7 +79,13 @@ public class EditProfileFragment extends Fragment {
         mSetBirthday.setText(myUser.getBirthday(), TextView.BufferType.EDITABLE);
 
         mAvatar = (ImageView)view.findViewById(R.id.iv_avatar_edit_profile);
-        mAvatar.setImageResource(myUser.getAvatar());
+        if (myUser.getAvatarUri()!=null) {
+            mAvatar.setImageURI(Uri.parse(myUser.getAvatarUri()));
+        }
+        else {
+
+            mAvatar.setImageResource(myUser.getAvatar());
+        }
 
         mBackButton = (ImageView) view.findViewById(R.id.iv_back_edit_profile);
         mBackButton.setImageResource(R.drawable.ic_baseline_back);
@@ -101,7 +112,7 @@ public class EditProfileFragment extends Fragment {
         mChangeAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                pickImageFromGallery();
             }
         });
 
@@ -116,6 +127,20 @@ public class EditProfileFragment extends Fragment {
     }
     private void setCurrentFragment(Fragment fragment) {
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, fragment).commit();
+    }
+    private void pickImageFromGallery() {
+        Intent cameraIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        cameraIntent.setType("image/*");
+        startActivityForResult(cameraIntent, 1000);
+
+    }
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK && requestCode==IMAGE_PICK_CODE ) {
+            Uri imageUri = data.getData();
+            mAvatar.setImageURI(imageUri);
+            myUser.setAvatarUri(imageUri.toString());
+            mMainViewModel.setMyUserMutableLiveData(myUser);
+        }
     }
 
 }

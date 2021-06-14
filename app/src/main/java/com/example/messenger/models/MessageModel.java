@@ -13,6 +13,7 @@ public class MessageModel {
     private String messageText;
     private String fileURL;
     private int avatar;
+    private String avatarUri;
     private String imageSendUri;
     private String imageSendBitmap;
     public MessageModel(int messageId, int senderId, String senderUsername, String messageText, int avatar) {
@@ -40,6 +41,14 @@ public class MessageModel {
         this.messageDateTime = LocalDateTime.now().toString();
         this.avatar = avatar;
         this.imageSendBitmap = imageSendBitmap;
+    }
+
+    public void setAvatarUri(String avatarUri) {
+        this.avatarUri = avatarUri;
+    }
+
+    public String getAvatarUri() {
+        return avatarUri;
     }
 
     public int getSenderId() {

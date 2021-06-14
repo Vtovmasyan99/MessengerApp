@@ -12,6 +12,7 @@ public class UserModel {
     private int avatar;
     LocalDate dateJoined;
     private String birthday;
+    private String avatarUri;
     public UserModel() {
         dateJoined = LocalDate.now();
         birthday = "Unknown";
@@ -26,6 +27,14 @@ public class UserModel {
         this.email = email;
         this.birthday = "20/12/1999";
 
+    }
+
+    public void setAvatarUri(String avatarUri) {
+        this.avatarUri = avatarUri;
+    }
+
+    public String getAvatarUri() {
+        return avatarUri;
     }
 
     public void setUsername(String username) {

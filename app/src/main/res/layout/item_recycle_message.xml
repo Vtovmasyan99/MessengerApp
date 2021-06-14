@@ -41,6 +41,7 @@
             android:layout_width="fill_parent"
             android:layout_height="25dp"
             android:layout_marginEnd="20dp"
+            android:textSize="10sp"
             android:gravity="end"
             android:textColor="@color/black"
             android:text="2021/01/01" />
@@ -49,9 +50,10 @@
             android:id="@+id/tv_message_text_chatroom"
             android:layout_width="match_parent"
             android:layout_height="30dp"
+
             android:gravity="center"
             android:text="@string/sentence1"
-            android:textSize="16sp"
+            android:textSize="22sp"
             android:textColor="@color/black"
             android:textStyle="italic"/>
     </LinearLayout>

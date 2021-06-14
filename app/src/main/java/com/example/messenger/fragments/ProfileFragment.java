@@ -1,5 +1,7 @@
 package com.example.messenger.fragments;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +17,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.messenger.R;
+import com.example.messenger.activities.LoginActivity;
+import com.example.messenger.activities.MainActivity;
+import com.example.messenger.helpers.SecurePrefsHelper;
 import com.example.messenger.models.UserModel;
 import com.example.messenger.viewmodels.MainViewModel;
 
@@ -26,11 +31,10 @@ public class ProfileFragment extends Fragment {
     TextView mGender;
     TextView mEmail;
     ImageView mAvatar;
-    Button mEditProfile;
+    Button mEditProfile, mLogOut;
     MainViewModel mMainViewModel;
 
     public ProfileFragment() {
-        // Required empty public constructor
     }
 
 
@@ -45,12 +49,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
-//        mUserViewModel.setAvatar(R.drawable.avatar);
-//        mUserViewModel.setRealNameMutableLiveData("John Stones");
-//        mUserViewModel.setBirthdayMutableLiveData("20/12/1999");
-//        mUserViewModel.setGender("Male");
-//        mUserViewModel.setEmail("johnstones@gmail.com");
-
         super.onCreate(savedInstanceState);
     }
 
@@ -62,14 +60,15 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull  View view, @Nullable  Bundle savedInstanceState) {
-//        myUser = new UserModel("username1", "password1", "John Stones", 1,
-//                R.drawable.avatar, "male", "user@gmail.com");
+
         mMainViewModel = ViewModelProviders.of(requireActivity()).get(MainViewModel.class);
         myUser = mMainViewModel.getMyUserMutableLiveData().getValue();
         mRealName = (TextView)view.findViewById(R.id.tv_real_name_profile);
         mBirthDay = (TextView)view.findViewById(R.id.tv_birthday_profile);
         mGender = (TextView)view.findViewById(R.id.tv_gender_profile);
         mEmail = (TextView)view.findViewById(R.id.tv_email_profile);
+        mLogOut = (Button)view.findViewById(R.id.btn_logout_profile);
+
         mAvatar = (ImageView)view.findViewById(R.id.iv_avatar_profile);
         mEditProfile = (Button)view.findViewById(R.id.btn_edit_profile);
 
@@ -77,7 +76,12 @@ public class ProfileFragment extends Fragment {
         mBirthDay.setText(myUser.getBirthday());
         mGender.setText(myUser.getGender());
         mEmail.setText(myUser.getEmail());
-        mAvatar.setImageResource(myUser.getAvatar());
+        if(myUser.getAvatarUri()!=null) {
+            mAvatar.setImageURI(Uri.parse(myUser.getAvatarUri()));
+        }
+        else {
+            mAvatar.setImageResource(myUser.getAvatar());
+        }
 
         super.onViewCreated(view, savedInstanceState);
 
@@ -85,6 +89,17 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 setCurrentFragment(new EditProfileFragment());
+            }
+        });
+        mLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SecurePrefsHelper.removeMyUserFromSecurePrefs(getActivity());
+                SecurePrefsHelper.removeContactsFromSecurePrefs(getActivity());
+                SecurePrefsHelper.removeChatsFromSecurePrefs(getActivity());
+                getActivity().finish();
+                Intent myIntent = new Intent(getContext(), LoginActivity.class);
+                getContext().startActivity(myIntent);
             }
         });
     }

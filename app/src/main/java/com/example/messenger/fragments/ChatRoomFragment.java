@@ -67,6 +67,8 @@ public class ChatRoomFragment extends Fragment {
     private LinkedList<MessageModel> mMessages;
     private MessagesAdapter messagesAdapter;
 
+    private String myAvatar;
+
     public ChatRoomFragment() {
     }
 
@@ -127,6 +129,10 @@ public class ChatRoomFragment extends Fragment {
 
         myUser = mMainViewModel.getMyUserMutableLiveData().getValue();
 
+        if (myUser.getAvatarUri()!=null) {
+            myAvatar = myUser.getAvatarUri();
+        }
+
         mChatName.setText(mCurrentContact.getNickname());
         mOtherUserAvatar.setImageResource(mCurrentContact.getAvatarIcon());
         mBackButton.setOnClickListener(new View.OnClickListener() {
@@ -143,7 +149,11 @@ public class ChatRoomFragment extends Fragment {
 
         LinkedList<MessageModel> messages = new LinkedList<>();
         messages.add(new MessageModel(1,mCurrentContact.getId(), mCurrentContact.getNickname(), "Nice to add you as my friend!", mCurrentContact.getAvatarIcon()));
-        messages.add(new MessageModel(2,myUser.getId(), myUser.getRealName(), "Nice to add you too!", myUser.getAvatar()));
+        if (myAvatar!=null) {
+            mNewMessage = new MessageModel(2,myUser.getId(), myUser.getRealName(), "Nice to add you too!", myUser.getAvatar());
+            mNewMessage.setAvatarUri(myAvatar);
+        }
+        messages.add(mNewMessage);
         messagesAdapter = new MessagesAdapter(messages, getContext());
 
         mMessages = SecurePrefsHelper.getMessagesOfUserFromSecurePrefs(getActivity(), mCurrentContact.getId());
@@ -157,9 +167,15 @@ public class ChatRoomFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String messageText = mMessageText.getText().toString();
+                if(messageText.isEmpty() || messageText.equals("")) {
+                    return;
+                }
 
                 mMessageText.setText("", TextView.BufferType.EDITABLE);
                 mNewMessage = new MessageModel(5, myUser.getId(),  myUser.getRealName(),messageText, myUser.getAvatar());
+                if (myAvatar!=null) {
+                    mNewMessage.setAvatarUri(myAvatar);
+                }
                 mMessages.add(mNewMessage);
                 SecurePrefsHelper.saveMessagesOfUserInSecurePrefs(mMessages, getActivity(), mCurrentContact.getId());
                 messagesAdapter.setData(mNewMessage);
@@ -215,7 +231,7 @@ public class ChatRoomFragment extends Fragment {
     private void pickImageFromGallery() {
         Intent cameraIntent = new Intent(Intent.ACTION_GET_CONTENT);
         cameraIntent.setType("image/*");
-        startActivityForResult(cameraIntent, 1000);
+        startActivityForResult(cameraIntent, IMAGE_PICK_CODE);
 
     }
     private void dispatchTakePictureIntent() {
@@ -245,7 +261,6 @@ public class ChatRoomFragment extends Fragment {
 
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-//            tuftaView.setImageBitmap(imageBitmap);
             String bitmapString = BitMapToString(imageBitmap);
             mNewMessage = new MessageModel(6, myUser.getId(), myUser.getRealName(), myUser.getAvatar(), bitmapString );
             mMessages.add(mNewMessage);
@@ -253,10 +268,6 @@ public class ChatRoomFragment extends Fragment {
             messagesAdapter.setData(mNewMessage);
 
         }
-
-
-
-
     };
 
     @Override

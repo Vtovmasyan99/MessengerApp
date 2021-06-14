@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         initMyUser();
         initContacts();
         initChats();
+        hideSearchContactView();
 
         mMainViewModel.setMyUserMutableLiveData(myUser);
 
@@ -166,6 +167,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initMyUser() {
+        if (SecurePrefsHelper.getMyUserInSecurePrefs(this)!=null) {
+            myUser = SecurePrefsHelper.getMyUserInSecurePrefs(this);
+            return;
+        }
         myUser.setRealName("John Stones");
         myUser.setBirthday("20.12.1998");
         myUser.setEmail("John@gmail.com");
