@@ -1,7 +1,10 @@
 package com.example.messenger.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,7 +76,15 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 messageViewHolder.picture.setVisibility(View.VISIBLE);
                 messageViewHolder.messageContainer.setVisibility(View.GONE);
             }
-            else {
+            else if (messageModel.getImageSendBitmap() !=null){
+                Bitmap imageBitmap = StringToBitMap(messageModel.getImageSendBitmap());
+                messageViewHolder.picture.setImageBitmap(imageBitmap);
+                messageViewHolder.picture.setVisibility(View.VISIBLE);
+                messageViewHolder.messageContainer.setVisibility(View.GONE);
+
+
+            }
+            else{
                 messageViewHolder.picture.setVisibility(View.GONE);
                 messageViewHolder.messageContainer.setVisibility(View.VISIBLE);
 
@@ -136,6 +147,16 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.data.addAll(newData);
         notifyDataSetChanged();
 
+    }
+    public Bitmap StringToBitMap(String encodedString){
+        try {
+            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
+        }
     }
     private AppCompatActivity getActivity() {
         return (AppCompatActivity) context;

@@ -2,11 +2,13 @@ package com.example.messenger.fragments;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,21 +42,22 @@ import com.example.messenger.models.MessageModel;
 import com.example.messenger.models.UserModel;
 import com.example.messenger.viewmodels.MainViewModel;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.LinkedList;
 
 
 public class ChatRoomFragment extends Fragment {
     private static final int IMAGE_PICK_CODE = 1000;
     private static final int PERMISSION_CODE = 1001;
+    private static final int REQUEST_IMAGE_CAPTURE = 2000;
 
-    private static final int CAMERA_REQUEST_CODE = 200;
     private ImageView mOtherUserAvatar;
     private TextView mChatName;
     private RecyclerView mRecyclerView;
     private ImageView mBackButton;
     private EditText mMessageText;
-
-    ImageView mUseCamera, mUseGallery, mUseRecorder, mSendMessage, mSendLocation;
+    private ImageView mUseCamera, mUseGallery, mUseRecorder, mSendMessage, mSendLocation;
     private MainViewModel mMainViewModel;
 
     private Contact mCurrentContact;
@@ -110,6 +114,10 @@ public class ChatRoomFragment extends Fragment {
         mSendLocation.setImageResource(R.drawable.ic_baseline_add_location);
 
         mMessageText = (EditText)view.findViewById(R.id.et_write_message_room) ;
+
+
+
+
 
 
         mMainViewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
@@ -179,6 +187,12 @@ public class ChatRoomFragment extends Fragment {
             }
         }
         );
+        mUseCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dispatchTakePictureIntent();
+            }
+        });
 
 
 
@@ -204,18 +218,42 @@ public class ChatRoomFragment extends Fragment {
         startActivityForResult(cameraIntent, 1000);
 
     }
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        try {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        } catch (ActivityNotFoundException e) {
+            Log.i("CameraError", "dispatchTakePictureIntent: "+e);
+        }
+    }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE) {
+        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE)
+                 {
             Uri returnUri = data.getData();
-            mNewMessage = new MessageModel(6, myUser.getId(), myUser.getRealName(), "", myUser.getAvatar(), returnUri.toString());
-            Log.i("Arzaqantsyan", "onActivityResult: "+mCurrentContact.getId()+",  real name "+myUser.getRealName()+" have avatar?: "+myUser.getAvatar() );
+            String imageData = returnUri.toString();
+            mNewMessage = new MessageModel(6, myUser.getId(), myUser.getRealName(), "", myUser.getAvatar(), imageData);
+            Log.i("Arzaqantsyan", "onActivityResult: "+imageData.length() );
             mMessages.add(mNewMessage);
             SecurePrefsHelper.saveMessagesOfUserInSecurePrefs(mMessages, getActivity(), mCurrentContact.getId());
             messagesAdapter.setData(mNewMessage);
 
         }
+        else if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_IMAGE_CAPTURE) {
+
+
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+//            tuftaView.setImageBitmap(imageBitmap);
+            String bitmapString = BitMapToString(imageBitmap);
+            mNewMessage = new MessageModel(6, myUser.getId(), myUser.getRealName(), myUser.getAvatar(), bitmapString );
+            mMessages.add(mNewMessage);
+            SecurePrefsHelper.saveMessagesOfUserInSecurePrefs(mMessages, getActivity(), mCurrentContact.getId());
+            messagesAdapter.setData(mNewMessage);
+
+        }
+
 
 
 
@@ -233,6 +271,25 @@ public class ChatRoomFragment extends Fragment {
                 }
             }
 
+        }
+    }
+
+
+    public String BitMapToString(Bitmap bitmap){
+        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
+        byte [] b=baos.toByteArray();
+        String temp= Base64.encodeToString(b, Base64.DEFAULT);
+        return temp;
+    }
+    public Bitmap StringToBitMap(String encodedString){
+        try {
+            byte [] encodeByte=Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap=BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
         }
     }
 

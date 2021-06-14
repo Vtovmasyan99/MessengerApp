@@ -14,6 +14,7 @@ public class MessageModel {
     private String fileURL;
     private int avatar;
     private String imageSendUri;
+    private String imageSendBitmap;
     public MessageModel(int messageId, int senderId, String senderUsername, String messageText, int avatar) {
         this.messageId = messageId;
         this.senderId = senderId;
@@ -31,14 +32,14 @@ public class MessageModel {
         this.avatar = avatar;
         this.imageSendUri = imageSend;
     }
-    public MessageModel(int messageId, int senderId, String senderUsername, String messageText, String fileURL, int avatar) {
+
+    public MessageModel(int messageId, int senderId, String senderUsername,  int avatar, String imageSendBitmap) {
         this.messageId = messageId;
         this.senderId = senderId;
         this.senderUsername = senderUsername;
-        this.messageText = messageText;
-        this.fileURL = fileURL;
         this.messageDateTime = LocalDateTime.now().toString();
         this.avatar = avatar;
+        this.imageSendBitmap = imageSendBitmap;
     }
 
     public int getSenderId() {
@@ -75,5 +76,9 @@ public class MessageModel {
 
     public String getImageSendUri() {
         return imageSendUri;
+    }
+
+    public String getImageSendBitmap() {
+        return imageSendBitmap;
     }
 }
