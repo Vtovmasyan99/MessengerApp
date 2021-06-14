@@ -1,10 +1,12 @@
 package com.example.messenger.adapters;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -66,12 +68,14 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             messageViewHolder.nickname.setText(messageModel.getSenderUsername());
             messageViewHolder.messageText.setText(messageModel.getMessageText());
             messageViewHolder.messageDate.setText(messageModel.getMessageDateTime());
-            if(messageModel.getImageSend() !=null) {
-                messageViewHolder.picture.setImageURI(messageModel.getImageSend());
+            if(messageModel.getImageSendUri() !=null) {
+                messageViewHolder.picture.setImageURI(Uri.parse(messageModel.getImageSendUri()));
                 messageViewHolder.picture.setVisibility(View.VISIBLE);
+                messageViewHolder.messageContainer.setVisibility(View.GONE);
             }
             else {
                 messageViewHolder.picture.setVisibility(View.GONE);
+                messageViewHolder.messageContainer.setVisibility(View.VISIBLE);
 
             }
             messageViewHolder.filename.setVisibility(View.GONE);
@@ -98,6 +102,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         TextView nickname;
         TextView filename;
         ImageView picture;
+        LinearLayout messageContainer;
         public MessageViewHolder (@NonNull View itemView) {
             super(itemView);
             avatar = (ImageView)itemView.findViewById(R.id.iv_my_avatar_message_room);
@@ -106,6 +111,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             nickname = (TextView)itemView.findViewById(R.id.tv_my_nickname_message_room);
             filename = (TextView)itemView.findViewById(R.id.tv_filename_chatroom);
             picture = (ImageView)itemView.findViewById(R.id.iv_my_image_send_chatroom);
+            messageContainer = (LinearLayout)itemView.findViewById(R.id.linear_layout_my_message_container);
         }
     }
     public static class MessageViewHolder2 extends RecyclerView.ViewHolder {

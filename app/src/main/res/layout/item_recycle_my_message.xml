@@ -9,6 +9,7 @@
     android:paddingLeft="10dp">
 
     <LinearLayout
+        android:id="@+id/linear_layout_my_message_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
@@ -41,20 +42,21 @@
             android:layout_height="20dp"
             android:text="document_1.txt   download"
             android:visibility="gone" />
-        <ImageView
-            android:layout_gravity="end"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/iv_my_image_send_chatroom"
-            android:src="@drawable/image1"
-            android:visibility="gone"
-            />
+
         <VideoView
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:id="@+id/vv_my_video_send_chatroom"
             android:visibility="gone" />
     </LinearLayout>
+    <ImageView
+        android:layout_gravity="end"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/iv_my_image_send_chatroom"
+        android:src="@drawable/image1"
+        android:visibility="gone"
+        />
 
 
     <LinearLayout
@@ -78,5 +80,6 @@
             android:textStyle="bold" />
 
     </LinearLayout>
+
 
 </LinearLayout>

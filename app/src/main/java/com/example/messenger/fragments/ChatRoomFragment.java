@@ -202,9 +202,6 @@ public class ChatRoomFragment extends Fragment {
         Intent cameraIntent = new Intent(Intent.ACTION_GET_CONTENT);
         cameraIntent.setType("image/*");
         startActivityForResult(cameraIntent, 1000);
-//        if (cameraIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-//
-//        }
 
     }
 
@@ -212,10 +209,10 @@ public class ChatRoomFragment extends Fragment {
     {
         if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE) {
             Uri returnUri = data.getData();
-            mNewMessage = new MessageModel(6, myUser.getId(), myUser.getRealName(), "", myUser.getAvatar(), returnUri);
+            mNewMessage = new MessageModel(6, myUser.getId(), myUser.getRealName(), "", myUser.getAvatar(), returnUri.toString());
             Log.i("Arzaqantsyan", "onActivityResult: "+mCurrentContact.getId()+",  real name "+myUser.getRealName()+" have avatar?: "+myUser.getAvatar() );
             mMessages.add(mNewMessage);
-//            SecurePrefsHelper.saveMessagesOfUserInSecurePrefs(mMessages, getActivity(), mCurrentContact.getId());
+            SecurePrefsHelper.saveMessagesOfUserInSecurePrefs(mMessages, getActivity(), mCurrentContact.getId());
             messagesAdapter.setData(mNewMessage);
 
         }
@@ -226,7 +223,6 @@ public class ChatRoomFragment extends Fragment {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull  String[] permissions, @NonNull int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case PERMISSION_CODE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
