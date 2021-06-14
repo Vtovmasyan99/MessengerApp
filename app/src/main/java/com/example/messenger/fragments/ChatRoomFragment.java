@@ -167,7 +167,7 @@ public class ChatRoomFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String messageText = mMessageText.getText().toString();
-                if(messageText.isEmpty() || messageText.equals("")) {
+                if(messageText.isEmpty()) {
                     return;
                 }
 

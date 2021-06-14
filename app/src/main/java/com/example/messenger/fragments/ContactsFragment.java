@@ -1,9 +1,13 @@
 package com.example.messenger.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,7 +31,8 @@ public class ContactsFragment extends Fragment {
     private RecyclerView recyclerView;
 
     private MainViewModel mMainViewModel;
-
+    private EditText newContactName;
+    private Button searchNewContact;
     List<Contact> mContacts = new ArrayList<>();
 
 
@@ -52,12 +57,31 @@ public class ContactsFragment extends Fragment {
         recyclerView = view.findViewById(R.id.contacts_recyclerview);
 
         mMainViewModel = ViewModelProviders.of(requireActivity()).get(MainViewModel.class);
-
-
+        newContactName = (EditText)view.findViewById(R.id.et_search_new_contact);
+        searchNewContact = (Button)view.findViewById(R.id.btn_search_user_contact);
 
         List<Contact> mContacts = SecurePrefsHelper.getContactsFromSecurePrefs(getActivity());
 
+        searchNewContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String contactUsername = newContactName.getText().toString();
+                if (contactUsername.isEmpty()){
+                    return;
+                }
+                if (contactUsername.equals("Hopkins")) {
+                    Contact contact = new Contact("John Hopkins",  R.drawable.avatar_male, 12,"Hopkins", "male" );
+                    mMainViewModel.setCurrentContactMutableLiveData(contact);
+                    setCurrentFragment(new OtherUserProfile() );
 
+                }
+                else
+                    {
+                        CharSequence text = "Wrong username, no such user found!";
+                        Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
+                    }
+            }
+        });
 
         ContactAdapter contactAdapter = new ContactAdapter(mContacts, getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -106,5 +130,8 @@ public class ContactsFragment extends Fragment {
         super.onDestroyView();
 
         mMainViewModel.setSearchInputMutableLiveData(null);
+    }
+    private void setCurrentFragment(Fragment fragment) {
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.flFragment, fragment).addToBackStack("newContact").commit();
     }
 }

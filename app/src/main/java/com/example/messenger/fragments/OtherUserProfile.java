@@ -66,10 +66,22 @@ public class OtherUserProfile extends Fragment {
         deleteContact = (Button)view.findViewById(R.id.btn_delete_contact_other_profile);
         startMessage = (Button)view.findViewById(R.id.btn_send_message_other_profile);
 
+        if (mCurrentContact.getUsername().equals("Hopkins")) {
+            deleteContact.setVisibility(View.GONE);
+            startMessage.setVisibility(View.GONE);
+            addContact.setVisibility(View.VISIBLE);
+        }
+        else {
+            deleteContact.setVisibility(View.VISIBLE);
+            startMessage.setVisibility(View.VISIBLE);
+            addContact.setVisibility(View.GONE);
+
+        }
+
+
 
         avatar.setImageResource(mCurrentContact.getAvatarIcon());
         otherUserRealName.setText(mCurrentContact.getNickname());
-        addContact.setVisibility(View.GONE);
 
         startMessage.setOnClickListener(new View.OnClickListener() {
             @Override
