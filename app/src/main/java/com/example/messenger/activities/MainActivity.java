@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText searchView;
 
     private MainViewModel mMainViewModel;
-    private UserModel myUser = new UserModel();
+    private UserModel myUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         initMyUser();
         initContacts();
         initChats();
-        hideSearchContactView();
+
 
         mMainViewModel.setMyUserMutableLiveData(myUser);
 
@@ -120,7 +120,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void initContacts() {
         List<Contact> mContacts = new ArrayList<>();
-        int id = 2;
         mContacts.add(new Contact(getString(R.string.nickname1), R.drawable.avatar_male, 2, "username2", "Male"));
         mContacts.add(new Contact(getString(R.string.nickname10), R.drawable.avatar_female, 3, "username3", "Female"));
         mContacts.add(new Contact(getString(R.string.nickname2), R.drawable.avatar_male, 4, "username4", "Male"));
@@ -156,10 +155,7 @@ public class MainActivity extends AppCompatActivity {
         SecurePrefsHelper.saveChatsInSecurePrefs(mChats, this);
 
     }
-//    private void initMessages() {
-//        LinkedList<MessageModel> messages;
-//        messages.add()
-//    }
+
 
     private void initViews() {
         searchView = findViewById(R.id.et_search_main);
@@ -169,16 +165,21 @@ public class MainActivity extends AppCompatActivity {
     private void initMyUser() {
         if (SecurePrefsHelper.getMyUserInSecurePrefs(this)!=null) {
             myUser = SecurePrefsHelper.getMyUserInSecurePrefs(this);
-            return;
+            mMainViewModel.setMyUserMutableLiveData(myUser);
         }
-        myUser.setRealName("John Stones");
-        myUser.setBirthday("20.12.1998");
-        myUser.setEmail("John@gmail.com");
-        myUser.setAvatar(R.drawable.avatar);
-        myUser.setGender("Male");
-        myUser.setId(1);
-        myUser.setUsername("username1");
-        myUser.setPassword("PASSWORD1");
+        else {
+            myUser = new UserModel();
+            myUser.setRealName("John Stones");
+            myUser.setBirthday("20.12.1998");
+            myUser.setEmail("John@gmail.com");
+            myUser.setAvatar(R.drawable.avatar);
+            myUser.setGender("Male");
+            myUser.setId(1);
+            myUser.setUsername("username1");
+            myUser.setPassword("PASSWORD1");
+            mMainViewModel.setMyUserMutableLiveData(myUser);
+        }
+
     }
 
     private void setCurrentFragment(Fragment fragment) {
@@ -203,7 +204,6 @@ public class MainActivity extends AppCompatActivity {
         searchView.setVisibility(View.VISIBLE);
     }
 
-    // Override this method too
 
 
     @Override

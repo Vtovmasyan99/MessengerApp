@@ -70,10 +70,8 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             if(messageModel.getAvatarUri()!=null) {
                 messageViewHolder.avatar.setImageURI(Uri.parse(messageModel.getAvatarUri()));
             }
-            else
-            {
+            else {
                 messageViewHolder.avatar.setImageResource(messageModel.getAvatar());
-
             }
             messageViewHolder.nickname.setText(messageModel.getSenderUsername());
             messageViewHolder.messageText.setText(messageModel.getMessageText());

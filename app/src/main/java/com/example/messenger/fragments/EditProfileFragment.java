@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.example.messenger.R;
 import com.example.messenger.activities.MainActivity;
+import com.example.messenger.helpers.SecurePrefsHelper;
 import com.example.messenger.models.UserModel;
 import com.example.messenger.viewmodels.MainViewModel;
 
@@ -106,6 +107,7 @@ public class EditProfileFragment extends Fragment {
                 myUser.setBirthday(mSetBirthday.getText().toString());
                 mMainViewModel.setMyUserMutableLiveData(myUser);
                 setCurrentFragment(new ProfileFragment());
+                SecurePrefsHelper.saveMyUserInSecurePrefs(myUser, getActivity());
             }
         });
         mChangeAvatar = (Button)view.findViewById(R.id.iv_change_avatar_edit_profile);
@@ -140,6 +142,7 @@ public class EditProfileFragment extends Fragment {
             mAvatar.setImageURI(imageUri);
             myUser.setAvatarUri(imageUri.toString());
             mMainViewModel.setMyUserMutableLiveData(myUser);
+            SecurePrefsHelper.saveMyUserInSecurePrefs(myUser, getActivity());
         }
     }
 

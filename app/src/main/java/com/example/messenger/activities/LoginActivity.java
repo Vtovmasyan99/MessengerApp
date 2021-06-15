@@ -43,11 +43,8 @@ public class LoginActivity extends AppCompatActivity {
             LoginActivity.this.startActivity(myIntent);
 
         } else {
-            Context context = getApplicationContext();
             CharSequence text = "Wrong username or password!";
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
+            Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
 
         }
         user_password.setText("");

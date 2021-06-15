@@ -250,7 +250,10 @@ public class ChatRoomFragment extends Fragment {
             Uri returnUri = data.getData();
             String imageData = returnUri.toString();
             mNewMessage = new MessageModel(6, myUser.getId(), myUser.getRealName(), "", myUser.getAvatar(), imageData);
-            Log.i("Arzaqantsyan", "onActivityResult: "+imageData.length() );
+            if (myUser.getAvatarUri()!=null) {
+                mNewMessage.setAvatarUri(myUser.getAvatarUri());
+
+            }
             mMessages.add(mNewMessage);
             SecurePrefsHelper.saveMessagesOfUserInSecurePrefs(mMessages, getActivity(), mCurrentContact.getId());
             messagesAdapter.setData(mNewMessage);
@@ -263,6 +266,9 @@ public class ChatRoomFragment extends Fragment {
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             String bitmapString = BitMapToString(imageBitmap);
             mNewMessage = new MessageModel(6, myUser.getId(), myUser.getRealName(), myUser.getAvatar(), bitmapString );
+            if(myUser.getAvatarUri()!=null) {
+                mNewMessage.setAvatarUri(myUser.getAvatarUri());
+            }
             mMessages.add(mNewMessage);
             SecurePrefsHelper.saveMessagesOfUserInSecurePrefs(mMessages, getActivity(), mCurrentContact.getId());
             messagesAdapter.setData(mNewMessage);
