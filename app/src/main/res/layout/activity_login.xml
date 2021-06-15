@@ -19,6 +19,7 @@
         android:layout_gravity="center"
         android:layout_margin="5dp"
         android:hint="USER ID"
+        android:singleLine="true"
         android:textAlignment="center"
         android:textColorHint="#E8BDBD" />
 

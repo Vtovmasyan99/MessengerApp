@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.messenger.R;
+import com.example.messenger.models.Contact;
 import com.example.messenger.models.MessageModel;
 import com.example.messenger.models.UserModel;
 import com.example.messenger.viewmodels.MainViewModel;
@@ -31,11 +32,13 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public static final int OTHER_MESSAGE = 1;
     private MainViewModel mMainViewModel;
     private UserModel myUser;
+    private Contact otherUser;
     public MessagesAdapter(LinkedList<MessageModel> data, Context context) {
         this.data = data;
         this.context = context;
         mMainViewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
         myUser = mMainViewModel.getMyUserMutableLiveData().getValue();
+        otherUser = mMainViewModel.getCurrentContactMutableLiveData().getValue();
     }
     @Override
     public int getItemViewType (int position){
@@ -67,13 +70,13 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         MessageModel messageModel = data.get(position);
         if (holder.getItemViewType()==MY_MESSAGE) {
             MessageViewHolder messageViewHolder = (MessageViewHolder) holder;
-            if(messageModel.getAvatarUri()!=null) {
-                messageViewHolder.avatar.setImageURI(Uri.parse(messageModel.getAvatarUri()));
+            if(myUser.getAvatarUri()!=null) {
+                messageViewHolder.avatar.setImageURI(Uri.parse(myUser.getAvatarUri()));
             }
             else {
-                messageViewHolder.avatar.setImageResource(messageModel.getAvatar());
+                messageViewHolder.avatar.setImageResource(myUser.getAvatar());
             }
-            messageViewHolder.nickname.setText(messageModel.getSenderUsername());
+            messageViewHolder.nickname.setText(myUser.getRealName());
             messageViewHolder.messageText.setText(messageModel.getMessageText());
             messageViewHolder.messageDate.setText(messageModel.getMessageDateTime());
             if(messageModel.getImageSendUri() !=null) {
@@ -99,8 +102,8 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
         else {
             MessageViewHolder2 messageViewHolder2 = (MessageViewHolder2) holder;
-            messageViewHolder2.avatar.setImageResource(messageModel.getAvatar());
-            messageViewHolder2.nickname.setText(messageModel.getSenderUsername());
+            messageViewHolder2.avatar.setImageResource(otherUser.getAvatarIcon());
+            messageViewHolder2.nickname.setText(otherUser.getNickname());
             messageViewHolder2.messageText.setText(messageModel.getMessageText());
             messageViewHolder2.messageDate.setText(messageModel.getMessageDateTime());
         }

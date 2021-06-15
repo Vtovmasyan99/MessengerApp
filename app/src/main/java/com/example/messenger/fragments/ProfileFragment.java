@@ -55,6 +55,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        ((MainActivity)getActivity()).hideSearchContactView();
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 

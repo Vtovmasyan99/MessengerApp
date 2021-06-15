@@ -153,11 +153,15 @@ public class ChatRoomFragment extends Fragment {
             mNewMessage = new MessageModel(2,myUser.getId(), myUser.getRealName(), "Nice to add you too!", myUser.getAvatar());
             mNewMessage.setAvatarUri(myAvatar);
         }
-        messages.add(mNewMessage);
+        if (mNewMessage!=null) {
+            messages.add(mNewMessage);
+        }
         messagesAdapter = new MessagesAdapter(messages, getContext());
 
         mMessages = SecurePrefsHelper.getMessagesOfUserFromSecurePrefs(getActivity(), mCurrentContact.getId());
-        messagesAdapter.addData(mMessages);
+        if (mMessages != null) {
+            messagesAdapter.addData(mMessages);
+        }
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(messagesAdapter);
@@ -229,7 +233,7 @@ public class ChatRoomFragment extends Fragment {
     }
 
     private void pickImageFromGallery() {
-        Intent cameraIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        Intent cameraIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         cameraIntent.setType("image/*");
         startActivityForResult(cameraIntent, IMAGE_PICK_CODE);
 

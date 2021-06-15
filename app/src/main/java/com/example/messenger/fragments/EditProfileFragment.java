@@ -131,7 +131,7 @@ public class EditProfileFragment extends Fragment {
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, fragment).commit();
     }
     private void pickImageFromGallery() {
-        Intent cameraIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        Intent cameraIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         cameraIntent.setType("image/*");
         startActivityForResult(cameraIntent, 1000);
 

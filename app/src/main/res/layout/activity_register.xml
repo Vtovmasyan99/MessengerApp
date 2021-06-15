@@ -14,32 +14,37 @@
         android:id="@+id/et_email_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email" />
+        android:hint="Email"
+        android:singleLine="true" />
 
     <EditText
         android:id="@+id/et_real_name_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Real Name" />
+        android:hint="Real Name"
+        android:singleLine="true" />
 
     <EditText
         android:id="@+id/et_gender_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Gender" />
+        android:hint="Gender"
+        android:singleLine="true" />
 
     <EditText
         android:id="@+id/et_birthday_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Birthday"
-        android:inputType="date" />
+        android:inputType="date"
+        android:singleLine="true" />
 
     <EditText
         android:id="@+id/et_username_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Username" />
+        android:hint="Username"
+        android:singleLine="true" />
 
     <EditText
         android:id="@+id/et_password1_register"
