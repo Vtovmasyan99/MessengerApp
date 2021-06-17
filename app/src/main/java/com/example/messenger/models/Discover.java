@@ -3,18 +3,29 @@ package com.example.messenger.models;
 import java.util.ArrayList;
 
 public class Discover {
+    private int postId;
     private int avatarIcon;
     private String nickname;
-    private String text;
-    private String publishedTime;
-    private ArrayList<Integer> images;
+    private String postText;
+    private String postDate;
+    private int imageLocal;
+    private String imageBitmap;
 
-    public Discover(String nickname, int avatarIcon, String text, String publishedTime, ArrayList<Integer> images) {
+    public Discover(int postId, String nickname, int avatarIcon, String text, String publishedTime, int imageLocal) {
+        this.postId = postId;
         this.nickname = nickname;
         this.avatarIcon = avatarIcon;
-        this.text = text;
-        this.publishedTime = publishedTime;
-        this.images = images;
+        this.postText = text;
+        this.postDate = publishedTime;
+        this.imageLocal = imageLocal;
+    }
+    public Discover(int postId, String nickname, int avatarIcon, String text, String publishedTime, String imageBitmap) {
+        this.nickname = nickname;
+        this.postId = postId;
+        this.avatarIcon = avatarIcon;
+        this.postText = text;
+        this.postDate = publishedTime;
+        this.imageBitmap = imageBitmap;
     }
 
     public String getNickname() {
@@ -25,19 +36,23 @@ public class Discover {
         return avatarIcon;
     }
 
-    public ArrayList<Integer> getImages() {
-        return images;
+    public int getImageLocal() {
+        return imageLocal;
     }
 
-    public String getPublishedTime() {
-        return publishedTime;
+    public String getPostDate() {
+        return postDate;
     }
 
-    public String getText() {
-        return text;
+    public String getImageBitmap() {
+        return imageBitmap;
     }
 
-    public int getImageCount() {
-        return images.size();
+    public int getPostId() {
+        return postId;
+    }
+
+    public String getPostText() {
+        return postText;
     }
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.example.messenger.models.Chat;
 import com.example.messenger.models.Contact;
+import com.example.messenger.models.Discover;
 import com.example.messenger.models.MessageModel;
 import com.example.messenger.models.UserModel;
 import com.google.gson.Gson;
@@ -89,6 +90,14 @@ public class SecurePrefsHelper {
             sprefs.put("chats", chatsAsJson);
         }
     }
+    public static void saveDiscoversInSecurePrefs(LinkedList<Discover> discovers, Activity activity ) {
+        Gson gson = new Gson();
+        String discoversAsJson = gson.toJson(discovers);
+        if(activity!=null) {
+            SecurePreferences sprefs = new SecurePreferences(activity, PREFERENCE_NAME, SECURE_KEY, true);
+            sprefs.put("discovers", discoversAsJson);
+        }
+    }
 
 
 
@@ -138,6 +147,19 @@ public class SecurePrefsHelper {
             }
             else return new LinkedList<>();
 
+        }
+        else return new LinkedList<>();
+    }
+    public static LinkedList<Discover> getDiscoversFromSecurePrefs(Activity activity) {
+        Gson gson = new Gson();
+        if(activity!=null) {
+            SecurePreferences sprefs = new SecurePreferences(activity, PREFERENCE_NAME, SECURE_KEY, true);
+            String discoversAsJson = sprefs.getString("discovers");
+            if(discoversAsJson!=null) {
+                LinkedList<Discover> discovers = gson.fromJson(discoversAsJson, new TypeToken<LinkedList<Discover>>(){}.getType());
+                return discovers;
+            }
+            else return new LinkedList<>();
         }
         else return new LinkedList<>();
     }

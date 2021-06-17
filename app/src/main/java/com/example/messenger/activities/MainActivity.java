@@ -10,6 +10,7 @@ import com.example.messenger.R;
 import com.example.messenger.helpers.SecurePrefsHelper;
 import com.example.messenger.models.Chat;
 import com.example.messenger.models.Contact;
+import com.example.messenger.models.Discover;
 import com.example.messenger.models.MessageModel;
 import com.example.messenger.models.UserModel;
 import com.example.messenger.viewmodels.MainViewModel;
@@ -34,6 +35,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         initMyUser();
         initContacts();
         initChats();
+        initDiscover();
 
 
         mMainViewModel.setMyUserMutableLiveData(myUser);
@@ -137,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     private void initChats() {
         ArrayList<Chat> mChats = new ArrayList<>();
 
@@ -148,9 +150,9 @@ public class MainActivity extends AppCompatActivity {
         mChats.add(new Chat(getString(R.string.nickname3), R.drawable.avatar_male, "", "2020/01/01", 6));
         mChats.add(new Chat(getString(R.string.nickname8), R.drawable.avatar_female, "", "2021/01/01", 7));
         mChats.add(new Chat(getString(R.string.nickname4), R.drawable.avatar_male, "", "2021/01/01", 8));
-        mChats.add(new Chat(getString(R.string.nickname7), R.drawable.avatar_female,"", "2021/01/01", 9));
+        mChats.add(new Chat(getString(R.string.nickname7), R.drawable.avatar_female, "", "2021/01/01", 9));
         mChats.add(new Chat(getString(R.string.nickname5), R.drawable.avatar_male, "", "2021/01/01", 10));
-        mChats.add(new Chat(getString(R.string.nickname6), R.drawable.avatar_female,"", "2021/01/01", 11));
+        mChats.add(new Chat(getString(R.string.nickname6), R.drawable.avatar_female, "", "2021/01/01", 11));
 
         SecurePrefsHelper.saveChatsInSecurePrefs(mChats, this);
 
@@ -163,11 +165,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initMyUser() {
-        if (SecurePrefsHelper.getMyUserInSecurePrefs(this)!=null) {
+        if (SecurePrefsHelper.getMyUserInSecurePrefs(this) != null) {
             myUser = SecurePrefsHelper.getMyUserInSecurePrefs(this);
             mMainViewModel.setMyUserMutableLiveData(myUser);
-        }
-        else {
+        } else {
             myUser = new UserModel();
             myUser.setRealName("John Stones");
             myUser.setBirthday("20.12.1998");
@@ -180,6 +181,20 @@ public class MainActivity extends AppCompatActivity {
             mMainViewModel.setMyUserMutableLiveData(myUser);
         }
 
+    }
+
+    private void initDiscover() {
+        List<Contact> contacts = SecurePrefsHelper.getContactsFromSecurePrefs(this);
+        Contact contact1 = contacts.get(1);
+        Contact contact2 = contacts.get(2);
+        Contact contact3 = contacts.get(3);
+
+
+        LinkedList<Discover> discovers = new LinkedList<>();
+        discovers.add(new Discover(1, contact1.getNickname(), contact1.getAvatarIcon(), "Such a nice weather!", LocalDate.now().toString(), R.drawable.image1));
+        discovers.add(new Discover(2, contact2.getNickname(), contact2.getAvatarIcon(), "Im in the mood!", LocalDate.now().toString(), R.drawable.image2));
+        discovers.add(new Discover(3, contact3.getNickname(), contact3.getAvatarIcon(), "Who wants to have fun?", LocalDate.now().toString(), R.drawable.image3));
+        SecurePrefsHelper.saveDiscoversInSecurePrefs(discovers, this);
     }
 
     private void setCurrentFragment(Fragment fragment) {
@@ -205,9 +220,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable  Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
 }
