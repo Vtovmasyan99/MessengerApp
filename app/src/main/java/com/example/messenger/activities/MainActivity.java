@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    ;
+
 
     private void initChats() {
         ArrayList<Chat> mChats = new ArrayList<>();

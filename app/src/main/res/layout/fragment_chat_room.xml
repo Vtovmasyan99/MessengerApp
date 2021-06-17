@@ -57,6 +57,14 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <VideoView
+        android:layout_width="wrap_content"
+        android:layout_height="400dp"
+        android:id="@+id/video_view_tufta_video"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/messages_recyclerview"

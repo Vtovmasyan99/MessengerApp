@@ -30,8 +30,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.example.messenger.activities.MainActivity;
 import com.example.messenger.R;
@@ -51,6 +53,7 @@ public class ChatRoomFragment extends Fragment {
     private static final int IMAGE_PICK_CODE = 1000;
     private static final int PERMISSION_CODE = 1001;
     private static final int REQUEST_IMAGE_CAPTURE = 2000;
+    static final int REQUEST_VIDEO_CAPTURE = 3000;
 
     private ImageView mOtherUserAvatar;
     private TextView mChatName;
@@ -59,6 +62,8 @@ public class ChatRoomFragment extends Fragment {
     private EditText mMessageText;
     private ImageView mUseCamera, mUseGallery, mUseRecorder, mSendMessage, mSendLocation;
     private MainViewModel mMainViewModel;
+
+    private VideoView mVideoView;
 
     private Contact mCurrentContact;
     private UserModel myUser;
@@ -116,6 +121,9 @@ public class ChatRoomFragment extends Fragment {
         mSendLocation.setImageResource(R.drawable.ic_baseline_add_location);
 
         mMessageText = (EditText)view.findViewById(R.id.et_write_message_room) ;
+
+        mVideoView = (VideoView)view.findViewById(R.id.video_view_tufta_video);
+        mVideoView.setVisibility(View.GONE);
 
 
 
@@ -213,6 +221,19 @@ public class ChatRoomFragment extends Fragment {
                 dispatchTakePictureIntent();
             }
         });
+        mUseRecorder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dispatchTakeVideoIntent();
+            }
+        });
+
+        mVideoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mVideoView.start();
+            }
+        });
 
 
 
@@ -246,6 +267,12 @@ public class ChatRoomFragment extends Fragment {
             Log.i("CameraError", "dispatchTakePictureIntent: "+e);
         }
     }
+    private void dispatchTakeVideoIntent() {
+        Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        if (takeVideoIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE);
+        }
+    }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
@@ -276,6 +303,19 @@ public class ChatRoomFragment extends Fragment {
             mMessages.add(mNewMessage);
             SecurePrefsHelper.saveMessagesOfUserInSecurePrefs(mMessages, getActivity(), mCurrentContact.getId());
             messagesAdapter.setData(mNewMessage);
+
+        }
+        else  if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == Activity.RESULT_OK) {
+            Uri videoUri = data.getData();
+            Log.i("Arzaqantsyan", "video uri: " + videoUri.toString());
+            MediaController mediaController = new MediaController(getActivity());
+//            mediaController.setAnchorView(mVideoView);
+
+            mVideoView.setVideoURI(videoUri);
+            mVideoView.setVisibility(View.VISIBLE);
+            mVideoView.setMediaController(mediaController);
+            mVideoView.requestFocus();
+            mVideoView.start();
 
         }
     };
