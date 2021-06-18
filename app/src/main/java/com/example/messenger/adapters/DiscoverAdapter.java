@@ -1,7 +1,11 @@
 package com.example.messenger.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
+import android.net.Uri;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,11 +44,26 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.Discov
     @Override
     public void onBindViewHolder(@NonNull DiscoverViewHolder holder, int position) {
         Discover discover = data.get(position);
-        holder.avatar.setImageResource(discover.getAvatarIcon());
+        if (discover.getAvatarUri()==null) {
+            holder.avatar.setImageResource(discover.getAvatarIcon());
+
+        }
+        else {
+            Uri uri = Uri.parse(discover.getAvatarUri());
+            holder.avatar.setImageURI(uri);
+        }
         holder.nickname.setText(discover.getNickname());
         holder.postText.setText(discover.getPostText());
         holder.postDate.setText(discover.getPostDate());
-        holder.image.setImageResource(discover.getImageLocal());
+
+        if (discover.getImageUri()!=null) {
+            Uri uri = Uri.parse(discover.getImageUri());
+            holder.image.setImageURI(uri);
+        }
+        else if (discover.getImageLocal() !=0){
+            holder.image.setImageResource(discover.getImageLocal());
+        }
+        else return;
 
 
     }
@@ -72,6 +91,16 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.Discov
             likeButton = (Button)itemView.findViewById(R.id.btn_like_discover);
             commentButton = (Button)itemView.findViewById(R.id.btn_comment_discover);
             postText = (TextView)itemView.findViewById(R.id.tv_text_discover);
+        }
+    }
+    public Bitmap StringToBitMap(String encodedString){
+        try {
+            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
         }
     }
 }

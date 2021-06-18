@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.messenger.R;
+import com.example.messenger.activities.MainActivity;
 import com.example.messenger.helpers.SecurePrefsHelper;
 import com.example.messenger.models.Contact;
 import com.example.messenger.models.Discover;
@@ -44,6 +45,13 @@ public class DiscoverFragment extends Fragment {
 
         mAddPost = (ImageView)view.findViewById(R.id.iv_add_post_discover);
         mAddPost.setImageResource(R.drawable.ic_baseline_add_post);
+        mAddPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).hideBotNavAndSearchBar();
+                setCurrentFragmentWithBackFunction(new AddPostFragment());
+            }
+        });
 
         LinkedList<Discover> discovers = SecurePrefsHelper.getDiscoversFromSecurePrefs(getActivity());
         DiscoverAdapter discoverAdapter = new DiscoverAdapter(discovers, getContext());
@@ -61,5 +69,8 @@ public class DiscoverFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_discover, container, false);
+    }
+    private void setCurrentFragmentWithBackFunction(Fragment fragment) {
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.flFragment, fragment).addToBackStack("addPost").commit();
     }
 }

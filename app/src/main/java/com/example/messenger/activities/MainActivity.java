@@ -210,6 +210,12 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setVisibility(View.VISIBLE);
         searchView.setVisibility(View.VISIBLE);
     }
+    public void showBotNav() {
+        bottomNavigationView.setVisibility(View.VISIBLE);
+    }
+    public void hideBotNav() {
+        bottomNavigationView.setVisibility(View.GONE);
+    }
 
     public void hideSearchContactView() {
         searchView.setVisibility(View.GONE);
